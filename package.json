@@ -1,0 +1,16 @@
+{
+  "name": "lulyarolex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MuhweziDeo/LulyaRolex.git",
+  "author": "muhwezi deo <aggrey256@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10"
+  }
+}
