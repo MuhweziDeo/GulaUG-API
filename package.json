@@ -6,9 +6,9 @@
   "author": "muhwezi deo <aggrey256@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "jest",
-    "coverage": "jest --collectCoverageFrom=src/**.js --coverage"
+    "coverage": "jest --collectCoverageFrom=src/**.js --coverage",
+    "start": "nodemon server.js",
+    "test": "jest"
   },
   "dependencies": {
     "coverage": "^0.0.0",
@@ -16,7 +16,9 @@
     "express": "^4.16.4",
     "mocha": "^6.0.2",
     "nodemon": "^1.18.10",
-    "travis": "^0.1.1"
+    "travis": "^0.1.1",
+    "pg": "^7.9.0",
+    "sequelize": "^5.2.9"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
