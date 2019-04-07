@@ -1,5 +1,5 @@
-const { userCreateValidator } = require('../../helpers/userValidations/userValidator');
-const UserService = require('../../services/userService');
+const { userCreateValidator } = require('../../../helpers/userValidations/userValidator');
+const UserService = require('../../../services/userService');
 
 module.exports = async function  (req, res, next){
     const { body } = req

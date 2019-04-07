@@ -45,6 +45,8 @@ class UserService{
         throw new Error('couldnt create user');
         }
     }
+
+    
     static async verifyPassword(email,password){
         try {
       
@@ -58,6 +60,29 @@ class UserService{
             console.log(error);
             throw new Error('couldnt verify password');
         }
+    }
+
+    static async updatePassword(email,password) {
+        try {
+      
+            const user = await UserService.findUserByEmail(email)
+            
+            const hashPassword = await bcrypt.hash(password,saltRounds);
+
+            const updateUser = await user.update({
+                password:hashPassword
+            })
+
+            console.log(updateUser)
+
+            return updateUser;
+         
+           
+    
+            } catch (error) {
+                console.log(error);
+                throw new Error('couldnt update password');
+            }
     }
 
 }

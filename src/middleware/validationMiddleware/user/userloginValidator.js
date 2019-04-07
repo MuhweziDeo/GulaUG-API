@@ -1,4 +1,4 @@
-const { userLoginValidator } = require('../../helpers/userValidations/userValidator');
+const { userLoginValidator } = require('../../../helpers/userValidations/userValidator');
 
 module.exports = async function (req, res, next) {
     const { body } = req;

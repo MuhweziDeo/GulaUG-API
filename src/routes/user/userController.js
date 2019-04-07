@@ -113,6 +113,74 @@ class UserController {
             })
         }
     }
+
+    static async requestPasswordReset(req,res){
+    try {
+        const { email , username , id } = req.user
+       const token = await jwt.sign({
+        email,
+        username,
+        id,
+    }, process.env.SECRET, {
+        expiresIn: 60 * 60
+    });
+
+    const mailOptions = {
+        to: email,
+        from: process.env.USER_EMAIL,
+        subject: 'Email Verification',
+        html: `
+    Hey ${username} password reset link was sent to your email
+    Click the link to reset password
+    <p>Click <a href="${process.env.ACTIVATION_URL}/auth/password-reset/${token}/confirm/">Here</a></p>
+    if you didnot request a password reset, Please ignore this message...
+    `
+
+    }
+    sendMail(mailOptions);
+    res.status(200).send({
+        success:true,
+        message:'Thank You A password reset link was sent to your email'
+    })
+
+
+    } catch (error) {
+        console.log(error);
+        throw new Error('Unable to complete your password reset request');
+    }
+    }
+
+    static async passwordResetConfirm (req,res) {
+        try {
+            const { body: { password , confirmPassword } } = req
+            const user =  jwt.verify(req.params.token, process.env.SECRET)
+            if(password === confirmPassword){
+              const userPassworReset = await UserService.updatePassword(user.email,password)
+              const accessToken = jwt.sign(_.pick(user,['username','id']),process.env.SECRET)
+              return res.status(200).send({
+                  success:true,
+                  data: _.pick(userPassworReset,['username','id','email']),
+                  message:'password reset successfully',
+                  accessToken
+
+              })
+            }
+           return res.status(400).send({
+                success:false,
+                message:'passwords must match'
+            })
+           
+        } catch (error) {
+           
+            res.status(500).send({
+                success:false,
+                error:error.message,
+                name:error.name,
+                message:'Please check the link and try again'
+            })
+        }
+        
+    }
 }
 
 module.exports = UserController;
