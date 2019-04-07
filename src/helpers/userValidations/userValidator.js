@@ -10,6 +10,15 @@ const userCreateValidator = (data) => {
     return Joi.validate(data,schema)
 }
 
+const userLoginValidator = data => {
+    const schema = {
+        email:Joi.string().required().email(),
+        password:Joi.string().required()
+    }
+    return Joi.validate(data,schema)
+}
+
 module.exports = {
-    userCreateValidator:userCreateValidator
+    userCreateValidator,
+    userLoginValidator
 }

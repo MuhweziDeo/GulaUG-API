@@ -73,6 +73,46 @@ class UserController {
         }
        
     }
+    static async loginUser(req,res){
+        try {
+            const { body: { email, password } } = req;
+
+            const user = await UserService.findUserByEmail(email);
+            if(!user) return res.status(400).send({
+                success:false,
+               message:'User with that email not found'
+            });
+
+            const verifyPassword = await UserService.verifyPassword(email,password);
+            if(!verifyPassword) return res.status(400).send({
+                success:false,
+                message:'Invalid password',
+                action:'Please input the right password'
+            })
+
+            if(!user.email_verified) return res.status(400).send({
+                success:false,
+                message:'email not verified',
+                action:'Please verify your email before you login',
+                action_url:null
+            })
+
+            const accessToken = jwt.sign( { username:user.username, email:user.email },process.env.SECRET)
+
+            res.status(200).send({
+                success:true,
+                data:_.pick(user,['username']),
+                accessToken
+
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                message:'unable to complete this request',
+                error:error.message
+            })
+        }
+    }
 }
 
 module.exports = UserController;

@@ -33,7 +33,7 @@ class UserService{
             const { username , email , password } = data;
             const salt = await bcrypt.genSalt(saltRounds)
             const hashedPassword = await bcrypt.hash(password,salt)
-            console.log(hashedPassword)
+        
             const user = await User.create({
                 username,
                 email,
@@ -45,7 +45,21 @@ class UserService{
         throw new Error('couldnt create user');
         }
     }
+    static async verifyPassword(email,password){
+        try {
+      
+        const user = await UserService.findUserByEmail(email)
+        
+        const verifyPassword = await bcrypt.compare(password,user.password);
+     
+        return verifyPassword;
+
+        } catch (error) {
+            console.log(error);
+            throw new Error('couldnt verify password');
+        }
+    }
 
 }
-// console.log(UserService.findUserByEmail('esmsasnissssssasashsssssssassssalsassjasaasasaaasssaa@sagamil.com').then(user =>console.log(user)))
+
 module.exports = UserService;
