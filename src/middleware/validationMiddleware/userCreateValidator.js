@@ -12,6 +12,7 @@ module.exports = async function  (req, res, next){
     });
     const attemptedUsername = await UserService.findUserByUsername(body.username);
     const attemptedEmail = await UserService.findUserByEmail(body.email);
+    
     if (attemptedUsername) {
     res.status(400).send({
             success: false,
