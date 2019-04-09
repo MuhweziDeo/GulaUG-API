@@ -32,9 +32,20 @@ const passwordResetConfirmValidator = data => {
     }
     return Joi.validate(data,schema)
 }
+const updateProfileValidator = data => {
+    const schema = {
+        firstName:Joi.string(),
+        lastName:Joi.string(),
+        country:Joi.string(),
+        city:Joi.string(),
+
+    }
+    return Joi.validate(data,schema)
+}
 module.exports = {
     userCreateValidator,
     userLoginValidator,
     passwordResetRequestValidator,
-    passwordResetConfirmValidator
+    passwordResetConfirmValidator,
+    updateProfileValidator
 }

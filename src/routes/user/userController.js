@@ -2,8 +2,9 @@ require('dotenv').config();
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const UserService = require('../../services/userService');
+const ProfileService = require('../../services/profileService');
 const sendMail = require('../../helpers/emailHelper');
-
+const app = require('../../app');
 
 class UserController {
     static async signUpUser(req, res) {
@@ -11,7 +12,8 @@ class UserController {
             const { body } = req
 
             const user = await UserService.createUser(body);
-           
+            
+            app.emit('user_created', _.pick(user,['username']))
             res.status(201).send({
                 success: true,
                 data: _.pick(user, ['id', 'username', 'email']),
@@ -21,7 +23,8 @@ class UserController {
             });
             const token = await jwt.sign({
                 email: user.email,
-                username: user.username
+                username: user.username,
+                id:user.id
             }, process.env.SECRET, {
                 expiresIn: 60 * 60
             });
@@ -37,10 +40,15 @@ class UserController {
             `
 
             }
+            
             sendMail(mailOptions);
 
         } catch (error) {
-            res.status(500).send('Unable to complete request')
+            res.status(500).send({
+               message:'Unable to complete request',
+               error:error
+            }
+            )
         }
     }
 
@@ -60,7 +68,7 @@ class UserController {
                 email_verified:true,
                 verified_on:new Date()
             })
-            const accessToken = jwt.sign( { username:user.username, email:user.email },process.env.SECRET)
+            const accessToken = jwt.sign( { username:user.username, email:user.email, id:user.id },process.env.SECRET)
         
             res.status(200).send({
                 success:true,
@@ -97,7 +105,7 @@ class UserController {
                 action_url:null
             })
 
-            const accessToken = jwt.sign( { username:user.username, email:user.email },process.env.SECRET)
+            const accessToken = jwt.sign( { username:user.username, email:user.email, id:user.id },process.env.SECRET)
 
             res.status(200).send({
                 success:true,
@@ -180,6 +188,47 @@ class UserController {
             })
         }
         
+    }
+    static async getProfile (req,res) {
+        try {
+            const { params : { username } } = req;
+            const fetchProfile = await ProfileService.getProfile(username);
+
+            if(!fetchProfile) return res.status(404).send({
+                message:'404 profile not found',
+                success:false
+            })
+
+            res.status(200).send({
+                success:true,
+                profileData:fetchProfile
+            })
+
+        } catch (error) {
+            console.log(error)
+            throw new Error({
+                message:"unable to fetch profile",
+                error:error
+            });
+        }
+    }
+    static async updateProfile(req,res){
+        const { params: { username }, body } = req;
+        
+        const updatedProfile = await ProfileService.updateProfile(username,body)
+
+        res.status(200).send({
+            success:true,
+            message:'Profile updated successfully',
+            data:updatedProfile
+        });
+    }
+    static async getProfiles(req,res) {
+        const profiles = await ProfileService.getProfiles();
+        res.status(200).send({
+            success:true,
+            profiles
+        });
     }
 }
 
