@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     firstName: DataTypes.STRING,
     lastName:DataTypes.STRING,
     city:DataTypes.STRING,
-    country:DataTypes.STRING
+    country:DataTypes.STRING,
+    image:DataTypes.STRING
   }, {});
   Profile.associate = function(models) {
     Profile.belongsTo(models.User, { foreignKey:'username' })

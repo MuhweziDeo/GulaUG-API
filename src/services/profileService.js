@@ -14,9 +14,10 @@ static async getProfile(username) {
     const user = await User.findOne({ where: { username } } )
    
     const profile = await Profile.findOne({ where :{ username } })
-
+    
+    if(!profile) return {message:'No Matching Profile found'};
     return {
-       profile:_.pick(profile,['id','lastName','firstName','city','country']),
+       profile:_.pick(profile,['id','lastName','firstName','city','country','image']),
        user:_.pick(user,['username','email','id'])
     }
 }

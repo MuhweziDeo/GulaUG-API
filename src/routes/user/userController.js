@@ -5,7 +5,8 @@ const UserService = require('../../services/userService');
 const ProfileService = require('../../services/profileService');
 const sendMail = require('../../helpers/emailHelper');
 const app = require('../../app');
-
+const { dataUri } = require('../../middleware/multer');
+const { uploader } = require('../../config/cloudinaryConfig');
 class UserController {
     static async signUpUser(req, res) {
         try {
@@ -204,8 +205,8 @@ class UserController {
             const { params : { username } } = req;
             const fetchProfile = await ProfileService.getProfile(username);
 
-            if(!fetchProfile) return res.status(404).send({
-                message:'404 profile not found',
+            if(fetchProfile.message) return res.status(404).send({
+                message:fetchProfile.message,
                 success:false
             })
 
@@ -223,15 +224,33 @@ class UserController {
         }
     }
     static async updateProfile(req,res){
-        const { params: { username }, body } = req;
-        
-        const updatedProfile = await ProfileService.updateProfile(username,body)
+        try {
+            const { params: { username }, body } = req;  
+            const updateBody = body;
+            if(req.file){
+                const file = dataUri(req).content
+                const result = await uploader.upload(file)
+                const updatedProfile = await ProfileService.updateProfile(
+                username,{ ...updateBody,image:result.url });
 
-        res.status(200).send({
-            success:true,
-            message:'Profile updated successfully',
-            data:updatedProfile
-        });
+                res.status(200).send({
+                    success:true,
+                    message:'Profile updated successfully',
+                    data:updatedProfile
+                });
+            }
+            const updatedProfile = await ProfileService.updateProfile(username,updateBody);
+            res.status(200).send({
+                success:true,
+                message:'Profile updated successfully',
+                data:updatedProfile
+            });
+
+
+        } catch (error) {
+            throw new Error(error)
+        }
+       
     }
     static async getProfiles(req,res) {
         const profiles = await ProfileService.getProfiles();
