@@ -16,7 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     verified_on: DataTypes.DATE,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    isAdmin:{
+      type:DataTypes.BOOLEAN,
+      defaultValue:false
+    }
   }, {});
   User.associate = function(models) {
     // associations can be defined here

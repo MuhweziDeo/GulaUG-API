@@ -18,7 +18,7 @@ router.post('/password-reset',passwordResetRequestValidator, UserController.requ
 
 router.put('/password-reset/:token/confirm', passwordResetConfirmValidator, UserController.passwordResetConfirm);
 
-router.get('/profile/:username', tokenAuthentication, UserController.getProfile);
+router.get('/profile/:username', UserController.getProfile);
 
 router.get('/profiles', UserController.getProfiles);
 

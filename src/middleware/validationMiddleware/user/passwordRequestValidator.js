@@ -16,7 +16,7 @@ module.exports= async function (req,res,next) {
         success:false,
         message:'A user with that email wasnot found'
     });
-    req.user = _.pick(user, ['username', 'email', 'id']);
+    req.user = _.pick(user, ['username', 'email', 'id','isAdmin']);
     next()
 
 }

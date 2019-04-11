@@ -16,7 +16,7 @@ class UserController {
             app.emit('user_created', _.pick(user,['username']))
             res.status(201).send({
                 success: true,
-                data: _.pick(user, ['id', 'username', 'email']),
+                data: _.pick(user, ['id', 'username', 'email','isAdmin']),
                 token: null,
                 message: 'An email verification link has been sent to your email'
 
@@ -24,6 +24,7 @@ class UserController {
             const token = await jwt.sign({
                 email: user.email,
                 username: user.username,
+                isAdmin:user.isAdmin,
                 id:user.id
             }, process.env.SECRET, {
                 expiresIn: 60 * 60
@@ -68,11 +69,15 @@ class UserController {
                 email_verified:true,
                 verified_on:new Date()
             })
-            const accessToken = jwt.sign( { username:user.username, email:user.email, id:user.id },process.env.SECRET)
+            const accessToken = jwt.sign( { 
+                username:user.username,
+                 email:user.email,
+                 id:user.id, isAdmin:user.isAdmin 
+                }, process.env.SECRET)
         
             res.status(200).send({
                 success:true,
-                data:verify,
+                data:_.pick(verify,['id','username','isAdmin']),
                 message:'Email Verification was successfully',
                 accessToken
             });
@@ -105,11 +110,16 @@ class UserController {
                 action_url:null
             })
 
-            const accessToken = jwt.sign( { username:user.username, email:user.email, id:user.id },process.env.SECRET)
+            const accessToken = jwt.sign( {
+                isAdmin:user.isAdmin,
+                 username:user.username,
+                 email:user.email,
+                  id:user.id
+                 },process.env.SECRET)
 
             res.status(200).send({
                 success:true,
-                data:_.pick(user,['username']),
+                data:_.pick(user,['username','isAdmin']),
                 accessToken
 
             });
