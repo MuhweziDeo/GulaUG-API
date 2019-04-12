@@ -6,6 +6,7 @@ const passwordResetRequestValidator = require('../../middleware/validationMiddle
 const passwordResetConfirmValidator = require('../../middleware/validationMiddleware/user/passwordResetConfirm');
 const tokenAuthentication = require('../../middleware/auth/tokenAuthentication');
 const profileUpdateValidator = require('../../middleware/validationMiddleware/user/profileUpdateValidator');
+const { multerUploads } = require('../../middleware/multer');
 router = express.Router()
 
 router.post('/signup',userCreateValidator, UserController.signUpUser);
@@ -22,6 +23,7 @@ router.get('/profile/:username', UserController.getProfile);
 
 router.get('/profiles', UserController.getProfiles);
 
-router.put('/profile/:username',tokenAuthentication, profileUpdateValidator, UserController.updateProfile)
+router.put('/profile/:username',tokenAuthentication, multerUploads, profileUpdateValidator, UserController.updateProfile)
+
 
 module.exports = router;
