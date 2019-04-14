@@ -6,11 +6,7 @@ const app = require('./app');
 const profileCreateHandler = require('./helpers/createProfilehandler');
 const { multerUploads, dataUri } = require('./middleware/multer');
 const { uploader, cloudinaryConfig } = require('./config/cloudinaryConfig');
-const errorHandler = require('./middleware/errorHandler');
-const morgan = require('morgan');
 
-
-app.use(morgan("combined"));
 app.use('*',cloudinaryConfig);
 app.use(express.json());
 app.use('/auth', userRouter);
@@ -21,8 +17,8 @@ sequelize.authenticate().then(console.log(
 )).catch((err)=>{
     console.log(err)
 })
-app.use('*',errorHandler);
-// file uploader
+const port = process.env.PORT || 5000
+
 app.post('/upload', multerUploads, async (req, res) => {
     try {
        if(req.file){
@@ -39,7 +35,6 @@ app.post('/upload', multerUploads, async (req, res) => {
         res.status(500).send(error);
     }
 });
-const port = process.env.PORT || 5000
 app.listen(port,() => {
     console.log(`Running on ${port}`);
 });

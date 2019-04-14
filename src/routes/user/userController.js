@@ -7,7 +7,6 @@ const sendMail = require('../../helpers/emailHelper');
 const app = require('../../app');
 const { dataUri } = require('../../middleware/multer');
 const { uploader } = require('../../config/cloudinaryConfig');
-
 class UserController {
     static async signUpUser(req, res) {
         try {
@@ -57,34 +56,34 @@ class UserController {
 
     static async verifyUser(req,res){
         try {
-            const {params :{ token } } = req;
-            const { email } = jwt.verify(token,process.env.SECRET);
-            const { email_verified, username, id, isAdmin} = await UserService.findUserByEmail(email);
-            const { profile:{ image } } = await ProfileService.getProfile(username);
-
-            if(email_verified){
+            const decoded = jwt.decode(req.params.token)
+        
+            const user = await UserService.findUserByEmail(decoded.email);
+        
+            if(user.email_verified){
                 return res.status(400).send({
                     success:false,
                     message:'This email was already verified'
                 });
             }
-            const verify = await UserService.verifyUser(email);
-            const accessToken = jwt.sign( { username, email, id, isAdmin }, process.env.SECRET)
+            const verify = await user.update({
+                email_verified:true,
+                verified_on:new Date()
+            })
+            const accessToken = jwt.sign( { 
+                username:user.username,
+                 email:user.email,
+                 id:user.id, isAdmin:user.isAdmin 
+                }, process.env.SECRET)
         
             res.status(200).send({
                 success:true,
                 data:_.pick(verify,['id','username','isAdmin']),
-                image,
                 message:'Email Verification was successfully',
                 accessToken
             });
         } catch (error) {
-            console.log(error)
-            res.status(500).send({
-                success:false,
-                message:'Unabel to complete request',
-                error
-            })
+            res.status(500).send('unable to complete this request')
         }
        
     }
@@ -102,7 +101,7 @@ class UserController {
             if(!verifyPassword) return res.status(400).send({
                 success:false,
                 message:'Invalid password',
-                action:'Please check password and try again'
+                action:'Please input the right password'
             })
 
             if(!user.email_verified) return res.status(400).send({
@@ -111,7 +110,7 @@ class UserController {
                 action:'Please verify your email before you login',
                 action_url:null
             })
-        
+
             const accessToken = jwt.sign( {
                 isAdmin:user.isAdmin,
                  username:user.username,
@@ -259,25 +258,6 @@ class UserController {
             success:true,
             profiles
         });
-    }
-    static async socialAuthenticationHandler(req, res){
-        try {
-        const { user: { username, email , id, isAdmin } } = req;
-        const { profile:{ image } } = await ProfileService.getProfile(username);
-        const token = jwt.sign({ username,email,id },process.env.SECRET)
-        res.status(200).send({
-            success:true,
-            username,
-            id,
-            isAdmin,
-            token,
-            image
-        })
-
-        } catch (error) {
-            console.log(error)
-            res.status(500).send(error)
-        }
     }
 }
 
