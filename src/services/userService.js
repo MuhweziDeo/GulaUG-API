@@ -1,6 +1,7 @@
-const { User } = require('../database/models');
+const { User, Profile } = require('../database/models');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const uuidv1 = require('uuid');
 
 class UserService{
     static async findUserByEmail(email) {
@@ -84,6 +85,25 @@ class UserService{
                 throw new Error('couldnt update password');
             }
     }
+
+    static async registerSocialUser(userData,ProfileData) {
+        const newUser = await User.create( { ...userData, email_verified: true,
+            verified_on: new Date(), password: uuidv1() } );
+        console.log(newUser);
+        await Profile.create( {
+            username: newUser.username,
+            ...ProfileData } );
+
+    return newUser;
+    }
+
+  static async verifyUser(email){
+    const verfied = await User.update({ email_verified: true, verified_on: new Date() },
+        { returning: true, where: { email } });
+        
+    return verfied[1][0].dataValues;
+    
+  }  
 
 }
 
