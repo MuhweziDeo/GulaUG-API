@@ -23,19 +23,13 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
     "mocha": "^6.0.2",
-    "morgan": "^1.9.1",
     "multer": "^1.4.1",
     "nodemailer": "^6.0.0",
     "nodemon": "^1.18.10",
     "parse-database-url": "^0.3.0",
-    "passport": "^0.4.0",
-    "passport-facebook-token": "^3.3.0",
-    "passport-google-plus-token": "^2.1.0",
-    "passport-twitter-token": "^1.3.0",
     "pg": "^7.9.0",
     "sequelize": "^5.2.9",
-    "travis": "^0.1.1",
-    "uuid": "^3.3.2"
+    "travis": "^0.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

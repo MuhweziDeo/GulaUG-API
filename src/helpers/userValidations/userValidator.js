@@ -42,26 +42,10 @@ const updateProfileValidator = data => {
     }
     return Joi.validate(data,schema)
 }
-const googleFacebookValidator = data => {
-    const schema = {
-        access_token: Joi.string().required()
-    }
-    return Joi.validate(data,schema)
-}
-
-const twitterTokenValidator = data => {
-    const schema = {
-        oauth_token: Joi.string().required(),
-        oauth_token_secret: Joi.string().required(),
-    }
-    return Joi.validate(data,schema)
-}
 module.exports = {
     userCreateValidator,
     userLoginValidator,
     passwordResetRequestValidator,
     passwordResetConfirmValidator,
-    updateProfileValidator,
-    googleFacebookValidator,
-    twitterTokenValidator
+    updateProfileValidator
 }
