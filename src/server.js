@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const { sequelize  }  = require('./database/models/index') ;
 const userRouter = require('./routes/user/');
 const app = require('./app');
@@ -12,6 +13,7 @@ const morgan = require('morgan');
 
 app.use(morgan("combined"));
 app.use('*',cloudinaryConfig);
+app.use(cors());
 app.use(express.json());
 app.use('/auth', userRouter);
 
