@@ -7,6 +7,7 @@ const sendMail = require('../../helpers/emailHelper');
 const app = require('../../app');
 const { dataUri } = require('../../middleware/multer');
 const { uploader } = require('../../config/cloudinaryConfig');
+
 class UserController {
     static async signUpUser(req, res) {
         try {

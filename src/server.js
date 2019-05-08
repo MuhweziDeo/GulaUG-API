@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const { sequelize  }  = require('./database/models/index') ;
 const userRouter = require('./routes/user/');
 const app = require('./app');
@@ -9,6 +10,7 @@ const { uploader, cloudinaryConfig } = require('./config/cloudinaryConfig');
 
 app.use('*',cloudinaryConfig);
 app.use(express.json());
+app.use(cors());
 app.use('/auth', userRouter);
 
 app.on('user_created', (data) => { profileCreateHandler(data.username) } );

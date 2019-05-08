@@ -57,7 +57,6 @@ class UserService{
         return verifyPassword;
 
         } catch (error) {
-            console.log(error);
             throw new Error('couldnt verify password');
         }
     }
@@ -71,14 +70,9 @@ class UserService{
 
             const updateUser = await user.update({
                 password:hashPassword
-            })
-
-            console.log(updateUser)
-
+            });
             return updateUser;
-         
-           
-    
+
             } catch (error) {
                 console.log(error);
                 throw new Error('couldnt update password');
