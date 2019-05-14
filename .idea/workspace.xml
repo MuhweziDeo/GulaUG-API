@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a5bcc0aa-f5a0-4b7d-b532-d87d0f29f4a3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/middleware/auth/tokenAuthentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/auth/tokenAuthentication.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/user/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/user/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/user/userController.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -17,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/user/userController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="69" column="95" lean-forward="true" selection-start-line="69" selection-start-column="95" selection-end-line="69" selection-end-column="95" />
+            <state relative-caret-position="322">
+              <caret line="292" column="46" selection-start-line="292" selection-start-column="46" selection-end-line="292" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -29,17 +28,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/routes/user/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
+            <state relative-caret-position="462">
               <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/middleware/auth/tokenAuthentication.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+            <state relative-caret-position="252">
+              <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -75,9 +74,9 @@
         <option value="$PROJECT_DIR$/src/database/models/user.js" />
         <option value="$PROJECT_DIR$/src/services/profileService.js" />
         <option value="$PROJECT_DIR$/src/server.js" />
-        <option value="$PROJECT_DIR$/src/middleware/auth/tokenAuthentication.js" />
         <option value="$PROJECT_DIR$/src/routes/user/index.js" />
         <option value="$PROJECT_DIR$/src/routes/user/userController.js" />
+        <option value="$PROJECT_DIR$/src/middleware/auth/tokenAuthentication.js" />
       </list>
     </option>
   </component>
@@ -169,6 +168,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -199,11 +199,12 @@
       <updated>1556653162151</updated>
       <workItem from="1556653163338" duration="1731000" />
       <workItem from="1557291454018" duration="328000" />
+      <workItem from="1557852596446" duration="510000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2558000" />
+    <option name="totallyTimeSpent" value="2992000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -277,24 +278,24 @@
     <entry file="file://$PROJECT_DIR$/src/database/models/profile.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/middleware/auth/tokenAuthentication.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/user/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
+        <state relative-caret-position="462">
           <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/routes/user/userController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="69" column="95" lean-forward="true" selection-start-line="69" selection-start-column="95" selection-end-line="69" selection-end-column="95" />
+        <state relative-caret-position="322">
+          <caret line="292" column="46" selection-start-line="292" selection-start-column="46" selection-end-line="292" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/middleware/auth/tokenAuthentication.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
         </state>
       </provider>
     </entry>

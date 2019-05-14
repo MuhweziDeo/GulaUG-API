@@ -281,7 +281,18 @@ class UserController {
         }
     }
     static async getLoggedInUser(req,res) {
-        res.status(200).send(req.user);
+        try {
+            const fetchProfile = await ProfileService.getProfile(req.user.username);
+            res.status(200).send({
+                data: fetchProfile,
+                success: true
+            })
+        }catch (e) {
+            res.status(500).send({
+                e,
+                message:'Something Went wrong'
+            })
+        }
     }
 }
 
