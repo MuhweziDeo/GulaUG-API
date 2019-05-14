@@ -11,11 +11,9 @@ const { uploader } = require('../../config/cloudinaryConfig');
 class UserController {
     static async signUpUser(req, res) {
         try {
-            const { body } = req
-
+            const { body } = req;
             const user = await UserService.createUser(body);
-            
-            app.emit('user_created', _.pick(user,['username']))
+            app.emit('user_created', _.pick(user,['username']));
             res.status(201).send({
                 success: true,
                 data: _.pick(user, ['id', 'username', 'email','isAdmin']),
@@ -29,7 +27,7 @@ class UserController {
                 isAdmin:user.isAdmin,
                 id:user.id
             }, process.env.SECRET, {
-                expiresIn: 60 * 60
+                expiresIn: '24hr'
             });
 
             const mailOptions = {
@@ -69,7 +67,9 @@ class UserController {
                 });
             }
             const verify = await UserService.verifyUser(email);
-            const accessToken = jwt.sign( { username, email, id, isAdmin }, process.env.SECRET)
+            const accessToken = jwt.sign( { username, email, id, isAdmin }, process.env.SECRET, {
+                expiresIn: '24hr'
+            });
         
             res.status(200).send({
                 success:true,
@@ -79,10 +79,9 @@ class UserController {
                 accessToken
             });
         } catch (error) {
-            console.log(error)
             res.status(500).send({
                 success:false,
-                message:'Unabel to complete request',
+                message:'Unable to complete request',
                 error
             })
         }
@@ -103,21 +102,23 @@ class UserController {
                 success:false,
                 message:'Invalid password',
                 action:'Please check password and try again'
-            })
+            });
 
             if(!user.email_verified) return res.status(400).send({
                 success:false,
                 message:'email not verified',
                 action:'Please verify your email before you login',
                 action_url:null
-            })
+            });
         
             const accessToken = jwt.sign( {
                 isAdmin:user.isAdmin,
                  username:user.username,
                  email:user.email,
                   id:user.id
-                 },process.env.SECRET)
+                 },process.env.SECRET, {
+                expiresIn: '24hr'
+            });
 
             res.status(200).send({
                 success:true,
@@ -175,11 +176,11 @@ class UserController {
             const { body: { password , confirmPassword } } = req
             const user =  jwt.verify(req.params.token, process.env.SECRET)
             if(password === confirmPassword){
-              const userPassworReset = await UserService.updatePassword(user.email,password)
+              const userPasswordReset = await UserService.updatePassword(user.email,password)
               const accessToken = jwt.sign(_.pick(user,['username','id']),process.env.SECRET)
               return res.status(200).send({
                   success:true,
-                  data: _.pick(userPassworReset,['username','id','email']),
+                  data: _.pick(userPasswordReset,['username','id','email']),
                   message:'password reset successfully',
                   accessToken
 
@@ -278,6 +279,9 @@ class UserController {
             console.log(error)
             res.status(500).send(error)
         }
+    }
+    static async getLoggedInUser(req,res) {
+        res.status(200).send(req.user);
     }
 }
 
