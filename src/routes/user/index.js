@@ -20,6 +20,8 @@ router.put('/verify/:token/',UserController.verifyUser);
 
 router.post('/login',userLoginValidator, UserController.loginUser);
 
+router.get('/user', tokenAuthentication, UserController.getLoggedInUser);
+
 router.post('/password-reset',passwordResetRequestValidator, UserController.requestPasswordReset);
 
 router.put('/password-reset/:token/confirm', passwordResetConfirmValidator, UserController.passwordResetConfirm);
