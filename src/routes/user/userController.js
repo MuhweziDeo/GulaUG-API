@@ -7,6 +7,7 @@ const sendMail = require('../../helpers/emailHelper');
 const app = require('../../app');
 const { dataUri } = require('../../middleware/multer');
 const { uploader } = require('../../config/cloudinaryConfig');
+const ErrorHandler = require ('../../helpers/sendErrorHelper');
 
 class UserController {
     static async signUpUser(req, res) {
@@ -41,7 +42,7 @@ class UserController {
             `
 
             }
-            
+
             sendMail(mailOptions);
 
         } catch (error) {
@@ -70,7 +71,7 @@ class UserController {
             const accessToken = jwt.sign( { username, email, id, isAdmin }, process.env.SECRET, {
                 expiresIn: '24hr'
             });
-        
+
             res.status(200).send({
                 success:true,
                 data:_.pick(verify,['id','username','isAdmin']),
@@ -85,7 +86,7 @@ class UserController {
                 error
             })
         }
-       
+
     }
     static async loginUser(req,res){
         try {
@@ -110,7 +111,7 @@ class UserController {
                 action:'Please verify your email before you login',
                 action_url:null
             });
-        
+
             const accessToken = jwt.sign( {
                 isAdmin:user.isAdmin,
                  username:user.username,
@@ -165,11 +166,10 @@ class UserController {
     })
 
 
-    } catch (error) {
-        console.log(error);
-        throw new Error('Unable to complete your password reset request');
+  } catch (error){
+      ErrorHandler.sendError(res, error);
     }
-    }
+  }
 
     static async passwordResetConfirm (req,res) {
         try {
@@ -190,9 +190,8 @@ class UserController {
                 success:false,
                 message:'passwords must match'
             })
-           
+
         } catch (error) {
-           
             res.status(500).send({
                 success:false,
                 error:error.message,
@@ -200,7 +199,7 @@ class UserController {
                 message:'Please check the link and try again'
             })
         }
-        
+
     }
     static async getProfile (req,res) {
         try {
@@ -218,16 +217,15 @@ class UserController {
             })
 
         } catch (error) {
-            console.log(error)
-            throw new Error({
-                message:"unable to fetch profile",
-                error:error
-            });
+            res.status(500).send({
+                message:'unable to complete this request',
+                error:error.message
+            })
         }
     }
     static async updateProfile(req,res){
         try {
-            const { params: { username }, body } = req;  
+            const { params: { username }, body } = req;
             const updateBody = body;
             if(req.file){
                 const file = dataUri(req).content
@@ -250,9 +248,12 @@ class UserController {
 
 
         } catch (error) {
-            throw new Error(error)
+          res.status(500).send({
+              message:'unable to complete this request',
+              error:error.message
+          })
         }
-       
+
     }
     static async getProfiles(req,res) {
         const profiles = await ProfileService.getProfiles();
@@ -276,8 +277,10 @@ class UserController {
         })
 
         } catch (error) {
-            console.log(error)
-            res.status(500).send(error)
+          res.status(500).send({
+              message:'unable to complete this request',
+              error:error.message
+          })
         }
     }
     static async getLoggedInUser(req,res) {

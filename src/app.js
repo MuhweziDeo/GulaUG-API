@@ -6,7 +6,9 @@ app = express();
 
 app.get('/', (req,res) => {
 
-res.status(200).send("find me here");
+res.status(200).send({
+  message: "welcome to Gula Uganda"
+});
 });
 
 module.exports=app;

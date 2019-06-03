@@ -10,7 +10,7 @@ passport.use('facebook-token',new FacebookTokenStrategy({
   }, async(accessToken, refreshToken, profile, done) => {
       try {
         const {displayName,_json:{ first_name, last_name, middle_name, email }, photos} = profile;
-        const userEmail =  email ? email : `${displayName.split(" ").join("")}@facebook.com` 
+        const userEmail =  email ? email : `${displayName.split(" ").join("")}@facebook.com`
         const user = await UserService.findUserByEmail(userEmail);
 
         if(!user){
@@ -22,11 +22,10 @@ passport.use('facebook-token',new FacebookTokenStrategy({
             return done(null, _.pick(newUser,['id','username','email','isAdmin']));
           }
           return done(null,_.pick(user,['id','username','email','isAdmin']));
-          
+
       } catch (error) {
-          console.log(error);
           throw new Error(error)
-      } 
+      }
   }
 ));
 
