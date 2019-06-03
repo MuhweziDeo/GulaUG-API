@@ -9,8 +9,14 @@ const { multerUploads, dataUri } = require('./middleware/multer');
 const { uploader, cloudinaryConfig } = require('./config/cloudinaryConfig');
 const errorHandler = require('./middleware/errorHandler');
 const morgan = require('morgan');
+const Sentry = require('@sentry/node');
 
 
+Sentry.init({ dsn: 'https://f50b7454243c41169b92613e5f50d4b3@sentry.io/1473626' });
+
+
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.errorHandler());
 app.use(morgan("combined"));
 app.use('*',cloudinaryConfig);
 app.use(cors());
@@ -29,15 +35,13 @@ app.post('/upload', multerUploads, async (req, res) => {
     try {
        if(req.file){
            const file = dataUri(req).content
-           console.log(file)
             const result = await uploader.upload(file)
             res.status(200).send({
                 success:true,
                 data:result
             })
-       } 
+       }
     } catch (error) {
-        console.log(error)
         res.status(500).send(error);
     }
 });

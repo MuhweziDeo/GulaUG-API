@@ -12,9 +12,9 @@ static async createUserProfile(username) {
 
 static async getProfile(username) {
     const user = await User.findOne({ where: { username } } )
-   
+
     const profile = await Profile.findOne({ where :{ username } })
-    
+
     if(!profile) return {message:'No Matching Profile found'};
     return {
        profile:_.pick(profile,['id','lastName','firstName','city','country','image']),
@@ -23,13 +23,19 @@ static async getProfile(username) {
 }
 
 static async updateProfile(username, updateObj) {
+  try {
     const profileUpdate = await Profile.update({ ...updateObj },
         { returning: true, where: { username } });
     return profileUpdate[1][0];
+    
+  } catch (e) {
+     return error;
+  }
+
 }
 static async getProfiles () {
     const profiles = await Profile.findAll();
-    
+
     return profiles
 }
 }

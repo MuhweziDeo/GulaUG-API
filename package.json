@@ -13,6 +13,7 @@
     "heroku-postbuild": "yarn add global sequelize-cli && yarn run db:migrate"
   },
   "dependencies": {
+    "@sentry/node": "^5.4.0",
     "bcrypt": "^3.0.5",
     "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
