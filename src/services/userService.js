@@ -1,9 +1,10 @@
+import uuidv1 from 'uuid';
+import bcrypt from 'bcrypt';
 const { User, Profile } = require('../database/models');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const uuidv1 = require('uuid');
 
-class UserService{
+const saltRounds = 10;
+
+class UserService {
     static async findUserByEmail(email) {
         try {
 
@@ -100,5 +101,5 @@ class UserService{
   }
 
 }
+export default UserService;
 
-module.exports = UserService;

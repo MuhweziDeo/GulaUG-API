@@ -1,5 +1,6 @@
-const { updateProfileValidator } = require('../../../helpers/userValidations/userValidator')
-module.exports = function(req,res,next){
+import { updateProfileValidator } from '../../../helpers/userValidations/userValidator';
+
+export default function(req,res,next){
 const { file, body ,user:{ username }} = req;
 
 if(Object.keys(body).length === 0 && !file){

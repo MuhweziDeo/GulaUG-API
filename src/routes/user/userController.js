@@ -1,15 +1,15 @@
 require('dotenv').config();
-const _ = require('lodash');
-const jwt = require('jsonwebtoken');
-const UserService = require('../../services/userService');
-const ProfileService = require('../../services/profileService');
-const sendMail = require('../../helpers/emailHelper');
-const app = require('../../app');
-const { dataUri } = require('../../middleware/multer');
-const { uploader } = require('../../config/cloudinaryConfig');
-const ErrorHandler = require ('../../helpers/sendErrorHelper');
+import _ from 'lodash';
+import jwt from 'jsonwebtoken';
+import UserService from '../../services/userService';
+import ProfileService from '../../services/profileService';
+import sendMail from '../../helpers/emailHelper';
+import app from '../../app';
+import { dataUri } from '../../middleware/multer';
+import { uploader } from '../../config/cloudinaryConfig';
+import ErrorHandler from '../../helpers/sendErrorHelper';
 
-class UserController {
+export default class UserController {
     static async signUpUser(req, res) {
         try {
             const { body } = req;
@@ -298,5 +298,3 @@ class UserController {
         }
     }
 }
-
-module.exports = UserController;

@@ -1,6 +1,6 @@
 const FacebookTokenStrategy = require('passport-facebook-token');
 const passport = require('passport');
-const UserService = require('../../services/userService');
+import  UserService  from  '../../services/userService';
 const uuidv1 = require('uuid/v1');
 const _ = require('lodash');
 
@@ -29,4 +29,4 @@ passport.use('facebook-token',new FacebookTokenStrategy({
   }
 ));
 
-module.exports = passport;
+export default passport;

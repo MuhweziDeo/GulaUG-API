@@ -1,6 +1,6 @@
 const GooglePlusTokenStrategy = require('passport-google-plus-token');
 const passport = require('passport');
-const UserService = require('../../services/userService');
+import  UserService from '../../services/userService';
 const uuidv1 = require('uuid/v1');
 const _ = require('lodash');
 
@@ -27,4 +27,4 @@ clientSecret: process.env.GOOGLE_CLIENT_SECRET,
    
 }));
 
-module.exports = passport
+export default passport;

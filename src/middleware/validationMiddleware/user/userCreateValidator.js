@@ -1,7 +1,7 @@
-const { userCreateValidator } = require('../../../helpers/userValidations/userValidator');
-const UserService = require('../../../services/userService');
+import { userCreateValidator } from '../../../helpers/userValidations/userValidator';
+import UserService from '../../../services/userService';
 
-module.exports = async function  (req, res, next){
+const userCreateValidatorMiddleware = async (req, res, next) => {
     const { body } = req
     const { error } = userCreateValidator(body);
     
@@ -30,3 +30,4 @@ module.exports = async function  (req, res, next){
 
     next();
 }
+export default userCreateValidatorMiddleware;
