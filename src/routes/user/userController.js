@@ -18,7 +18,6 @@ class UserController {
             res.status(201).send({
                 success: true,
                 data: _.pick(user, ['id', 'username', 'email','isAdmin']),
-                token: null,
                 message: 'An email verification link has been sent to your email'
 
             });
