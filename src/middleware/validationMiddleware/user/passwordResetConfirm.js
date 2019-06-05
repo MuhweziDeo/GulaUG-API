@@ -1,6 +1,6 @@
-const { passwordResetConfirmValidator } = require('../../../helpers/userValidations/userValidator');
+import { passwordResetConfirmValidator } from '../../../helpers/userValidations/userValidator';
 
-module.exports= async function (req,res,next) {
+export default async function (req,res,next) {
     const { body  } = req;
     const { error } = passwordResetConfirmValidator(body);
 

@@ -1,7 +1,7 @@
 const { Profile, User } = require('../database/models');
 const _ = require('lodash');
 
-class ProfileService {
+export default class ProfileService {
 
 static async createUserProfile(username) {
     const userProfile = await Profile.create({
@@ -27,7 +27,7 @@ static async updateProfile(username, updateObj) {
     const profileUpdate = await Profile.update({ ...updateObj },
         { returning: true, where: { username } });
     return profileUpdate[1][0];
-    
+
   } catch (e) {
      return error;
   }

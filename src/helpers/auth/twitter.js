@@ -1,6 +1,6 @@
 const TwitterTokenStrategy = require('passport-twitter-token');
 const passport = require('passport');
-const UserService = require('../../services/userService');
+import  UserService from '../../services/userService';
 const uuidv1 = require('uuid/v1');
 
 passport.use('twitter-token',new TwitterTokenStrategy({
@@ -33,4 +33,4 @@ passport.use('twitter-token',new TwitterTokenStrategy({
   }
 ));
 
-module.exports = passport;
+export default passport;

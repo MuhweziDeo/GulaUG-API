@@ -1,6 +1,6 @@
-const { twitterTokenValidator } = require('../../../helpers/userValidations/userValidator');
+import { twitterTokenValidator } from '../../../helpers/userValidations/userValidator';
 
-module.exports= async function (req,res,next) {
+export default async function (req,res,next) {
     const { body } = req;
     const { error } = twitterTokenValidator(body);
 

@@ -1,19 +1,19 @@
-const express = require('express');
-const userCreateValidator = require('../../middleware/validationMiddleware/user/userCreateValidator');
-const userLoginValidator = require('../../middleware/validationMiddleware/user/userloginValidator');
-const UserController = require('./userController');
-const passwordResetRequestValidator = require('../../middleware/validationMiddleware/user/passwordRequestValidator');
-const passwordResetConfirmValidator = require('../../middleware/validationMiddleware/user/passwordResetConfirm');
-const googleFacebookTokenValidator = require('../../middleware/validationMiddleware/user/facebookGoogleValidator'); 
-const twitterTokenValidator = require('../../middleware/validationMiddleware/user/twitterTokenValidator');
-const tokenAuthentication = require('../../middleware/auth/tokenAuthentication');
-const profileUpdateValidator = require('../../middleware/validationMiddleware/user/profileUpdateValidator');
-const { multerUploads } = require('../../middleware/multer');
-const googlePassport = require('../../helpers/auth/google');
-const facebookPassport = require('../../helpers/auth/facebook');
-const twitterPassport = require('../../helpers/auth/twitter');
+import express from 'express';
+import userCreateValidator from '../../middleware/validationMiddleware/user/userCreateValidator';
+import userLoginValidator from '../../middleware/validationMiddleware/user/userloginValidator';
+import UserController from './userController';
+import passwordResetRequestValidator from '../../middleware/validationMiddleware/user/passwordRequestValidator';
+import passwordResetConfirmValidator from '../../middleware/validationMiddleware/user/passwordResetConfirm';
+import googleFacebookTokenValidator from '../../middleware/validationMiddleware/user/facebookGoogleValidator';
+import twitterTokenValidator from '../../middleware/validationMiddleware/user/twitterTokenValidator';
+import tokenAuthentication from '../../middleware/auth/tokenAuthentication';
+import profileUpdateValidator from '../../middleware/validationMiddleware/user/profileUpdateValidator';
+import { multerUploads } from '../../middleware/multer';
+import googlePassport from '../../helpers/auth/google';
+import facebookPassport from '../../helpers/auth/facebook';
+import twitterPassport from '../../helpers/auth/twitter';
 
-router = express.Router()
+const router = express.Router()
 router.post('/signup',userCreateValidator, UserController.signUpUser);
 
 router.put('/verify/:token/',UserController.verifyUser);
@@ -38,4 +38,4 @@ router.post('/facebook',googleFacebookTokenValidator,facebookPassport.authentica
 
 router.post('/twitter',twitterTokenValidator, twitterPassport.authenticate('twitter-token',{session: false }),UserController.socialAuthenticationHandler);
 
-module.exports = router;
+export default router;

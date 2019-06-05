@@ -1,14 +1,14 @@
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { sequelize  }  = require('./database/models/index') ;
-const userRouter = require('./routes/user/');
-const app = require('./app');
-const profileCreateHandler = require('./helpers/createProfilehandler');
-const { multerUploads, dataUri } = require('./middleware/multer');
-const { uploader, cloudinaryConfig } = require('./config/cloudinaryConfig');
-const errorHandler = require('./middleware/errorHandler');
-const morgan = require('morgan');
+import express from 'express';
+const cors = require ('cors');
+import { sequelize  }  from './database/models/index';
+import userRouter from './routes/user/';
+import app from './app';
+import profileCreateHandler from './helpers/createProfilehandler';
+import { multerUploads, dataUri } from './middleware/multer';
+import { uploader, cloudinaryConfig } from './config/cloudinaryConfig';
+import errorHandler from './middleware/errorHandler';
+import morgan from 'morgan';
 const Sentry = require('@sentry/node');
 
 

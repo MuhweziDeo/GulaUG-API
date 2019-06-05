@@ -1,7 +1,7 @@
-const { userLoginValidator } = require('../../../helpers/userValidations/userValidator');
+import { userLoginValidator } from '../../../helpers/userValidations/userValidator';
 
-module.exports = async function (req, res, next) {
-    const { body } = req;
+const userLoginValidatorMiddlware = async  (req, res, next) => {
+    let { body } = req;
     const { error } = userLoginValidator(body);
 
     if(error) return res.status(400).send({
@@ -13,3 +13,5 @@ module.exports = async function (req, res, next) {
     next();
 
 }
+
+export default userLoginValidatorMiddlware;

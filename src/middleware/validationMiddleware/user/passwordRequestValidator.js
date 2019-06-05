@@ -1,7 +1,8 @@
-const { passwordResetRequestValidator } = require('../../../helpers/userValidations/userValidator');
-const UserService = require ('../../../services/userService');
-const _ = require('lodash')
-module.exports= async function (req,res,next) {
+import { passwordResetRequestValidator } from '../../../helpers/userValidations/userValidator';
+import UserService from '../../../services/userService';
+import _ from 'lodash';
+
+const passwordResetRequestValidatorMiddlware = async  (req,res,next) => {
     const { body : { email } } = req;
     const { error } = passwordResetRequestValidator(req.body);
 
@@ -20,3 +21,5 @@ module.exports= async function (req,res,next) {
     next()
 
 }
+
+export default passwordResetRequestValidatorMiddlware;
