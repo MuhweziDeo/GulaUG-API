@@ -2,9 +2,9 @@ const Joi = require('joi');
 
 const userCreateValidator = (data) => {
     const schema = {
-        username:Joi.string().trim().required().min(3),
-        email:Joi.string().trim().required().email(),
-        password:Joi.string().trim().required().min(5)
+        username:Joi.string().required(),
+        email:Joi.string().required().email(),
+        password:Joi.string().required()
     }
 
     return Joi.validate(data,schema)
@@ -12,32 +12,32 @@ const userCreateValidator = (data) => {
 
 const userLoginValidator = data => {
     const schema = {
-        email:Joi.string().trim().required().email(),
-        password:Joi.string().trim().required()
+        email:Joi.string().required().email(),
+        password:Joi.string().required()
     }
     return Joi.validate(data,schema)
 }
 
 const passwordResetRequestValidator = data => {
     const schema = {
-        email:Joi.string().trim().required().email()
+        email:Joi.string().required().email()
     }
     return Joi.validate(data,schema)
 }
 
 const passwordResetConfirmValidator = data => {
     const schema = {
-        password:Joi.string().trim().required().min(5),
-        confirmPassword:Joi.string().trim().required().min(5)
+        password:Joi.string().required(),
+        confirmPassword:Joi.string().required()
     }
     return Joi.validate(data,schema)
 }
 const updateProfileValidator = data => {
     const schema = {
-        firstName:Joi.string().trim().min(3),
-        lastName:Joi.string().trim().min(3),
-        country:Joi.string().trim().min(3),
-        city:Joi.string().trim().min(3),
+        firstName:Joi.string(),
+        lastName:Joi.string(),
+        country:Joi.string(),
+        city:Joi.string(),
 
     }
     return Joi.validate(data,schema)

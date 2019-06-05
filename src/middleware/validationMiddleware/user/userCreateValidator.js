@@ -3,8 +3,8 @@ const UserService = require('../../../services/userService');
 
 module.exports = async function  (req, res, next){
     const { body } = req
-    const { error, value } = userCreateValidator(body);
-
+    const { error } = userCreateValidator(body);
+    
     if (error) return res.status(400).send({
         success: false,
         message: error.details[0].message
@@ -27,6 +27,6 @@ module.exports = async function  (req, res, next){
         });
     }
 
-    req.body = value;
+
     next();
 }

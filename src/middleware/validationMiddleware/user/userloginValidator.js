@@ -2,13 +2,14 @@ const { userLoginValidator } = require('../../../helpers/userValidations/userVal
 
 module.exports = async function (req, res, next) {
     const { body } = req;
-    const { error, value } = userLoginValidator(body);
+    const { error } = userLoginValidator(body);
 
     if(error) return res.status(400).send({
         success:false,
-        message:error.details[0].message,
+        error:error.details[0].message,
+        message:'Invalid payload'
     });
-    req.body = value;
+
     next();
 
 }
