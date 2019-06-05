@@ -41,7 +41,7 @@ export default class UserController {
             <p>Click <a href="${process.env.ACTIVATION_URL}/auth/verify/${token}/">Here</a></p>
             `
 
-            }
+            };
 
             sendMail(mailOptions);
 
@@ -56,10 +56,10 @@ export default class UserController {
 
     static async verifyUser(req,res){
         try {
-            const {params :{ token } } = req;
+            const { params :{ token } } = req;
             const { email } = jwt.verify(token,process.env.SECRET);
             const { email_verified, username, id, isAdmin} = await UserService.findUserByEmail(email);
-            const { profile:{ image } } = await ProfileService.getProfile(username);
+            const profile = await ProfileService.getProfile(username);
 
             if(email_verified){
                 return res.status(400).send({
@@ -67,15 +67,14 @@ export default class UserController {
                     message:'This email was already verified'
                 });
             }
-            const verify = await UserService.verifyUser(email);
+            await UserService.verifyUser(email);
             const accessToken = jwt.sign( { username, email, id, isAdmin }, process.env.SECRET, {
                 expiresIn: '24hr'
             });
 
             res.status(200).send({
                 success:true,
-                data:_.pick(verify,['id','username','isAdmin']),
-                image,
+                data:profile,
                 message:'Email Verification was successfully',
                 accessToken
             });
@@ -105,10 +104,10 @@ export default class UserController {
                 action:'Please check password and try again'
             });
 
-            if(!user.email_verified) return res.status(400).send({
+            if(!user.email_verified || !user.active ) return res.status(400).send({
                 success:false,
-                message:'email not verified',
-                action:'Please verify your email before you login',
+                message:'email not verified or the account is disabled',
+                action:'Please verify your email before you login or contact administrator to activate account',
                 action_url:null
             });
 
@@ -259,7 +258,7 @@ export default class UserController {
         const profiles = await ProfileService.getProfiles();
         res.status(200).send({
             success:true,
-            profiles
+            data: profiles
         });
     }
     static async socialAuthenticationHandler(req, res){
@@ -292,7 +291,7 @@ export default class UserController {
             })
         }catch (e) {
             res.status(500).send({
-                e,
+                error: e,
                 message:'Something Went wrong'
             })
         }

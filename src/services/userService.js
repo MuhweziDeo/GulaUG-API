@@ -74,8 +74,6 @@ class UserService {
 
             return updateUser;
 
-
-
             } catch (error) {
                  return error;
             }
@@ -84,7 +82,6 @@ class UserService {
     static async registerSocialUser(userData,ProfileData) {
         const newUser = await User.create( { ...userData, email_verified: true,
             verified_on: new Date(), password: uuidv1() } );
-        console.log(newUser);
         await Profile.create( {
             username: newUser.username,
             ...ProfileData } );
@@ -93,11 +90,15 @@ class UserService {
     }
 
   static async verifyUser(email){
-    const verfied = await User.update({ email_verified: true, verified_on: new Date() },
-        { returning: true, where: { email } });
+        try {
+            const verified = await User.update({ email_verified: true,
+                    verified_on: new Date() },
+                { returning: true, where: { email } });
 
-    return verfied[1][0].dataValues;
-
+            return verified[1][0].dataValues;
+        }catch (e) {
+            return e;
+        }
   }
 
 }
