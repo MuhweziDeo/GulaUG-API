@@ -8,8 +8,8 @@ module.exports= async function (req,res,next) {
         success: false,
         message: error.details[0].message
     });
+    
 
-    req.body = value;
     next()
 
 }

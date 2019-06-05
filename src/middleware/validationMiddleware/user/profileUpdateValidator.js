@@ -8,16 +8,13 @@ if(Object.keys(body).length === 0 && !file){
         message:'Please Provide atleast one value to update'
     })
 }
-const { error, value } = updateProfileValidator(body)
+const { error } = updateProfileValidator(body)
 if (error) return res.status(400).send({
     success: false,
     message: error.details[0].message
 });
 
-if(username === req.params.username) {
-req.body = value;
-return next()
-};
+if(username === req.params.username) return next();
 
 return res.status(403).send({
     success:false,
