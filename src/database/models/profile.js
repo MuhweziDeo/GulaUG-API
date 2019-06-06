@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     image:DataTypes.STRING
   }, {});
   Profile.associate = function(models) {
-    Profile.belongsTo(models.User, { foreignKey:'username' })
+    Profile.belongsTo(models.User, { foreignKey:'username', key:'user',
+      targetKey:'username' })
   };
   return Profile;
 };

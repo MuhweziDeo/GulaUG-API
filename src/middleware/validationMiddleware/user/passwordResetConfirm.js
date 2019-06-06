@@ -8,8 +8,8 @@ export default async function (req,res,next) {
         success: false,
         message: error.details[0].message
     });
-    
+
 
     next()
 
-}
+};

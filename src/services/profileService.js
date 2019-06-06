@@ -1,5 +1,4 @@
 const { Profile, User } = require('../database/models');
-const _ = require('lodash');
 
 export default class ProfileService {
 
@@ -11,15 +10,17 @@ static async createUserProfile(username) {
 }
 
 static async getProfile(username) {
-    const user = await User.findOne({ where: { username } } )
 
-    const profile = await Profile.findOne({ where :{ username } })
+    const profile = await Profile.findOne({ where :{ username },
+        include: [ {
+        model: User, attributes: {
+            exclude: ['password'] }
+        } ]
+    });
 
     if(!profile) return {message:'No Matching Profile found'};
-    return {
-       profile:_.pick(profile,['id','lastName','firstName','city','country','image']),
-       user:_.pick(user,['username','email','id'])
-    }
+
+    return profile;
 }
 
 static async updateProfile(username, updateObj) {
@@ -34,10 +35,18 @@ static async updateProfile(username, updateObj) {
 
 }
 static async getProfiles () {
-    const profiles = await Profile.findAll();
+    const profiles = await Profile.findAll({
+        include: [{
+            model: User,
+            attributes: {
+                exclude: ['password']
+            },
+            where: {active: true}
+        }]
+    });
 
     return profiles
 }
 }
 
-module.exports = ProfileService
+module.exports = ProfileService;

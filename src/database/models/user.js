@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
      unique: true
     } ,
     email: {
-      type: DataTypes.STRING, 
+      type: DataTypes.STRING,
       unique: true,
     validate: {
       isEmail : true
@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     isAdmin:{
       type:DataTypes.BOOLEAN,
       defaultValue:false
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {});
   User.associate = function(models) {
