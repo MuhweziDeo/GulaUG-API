@@ -115,14 +115,15 @@ export default class UserController {
                 isAdmin:user.isAdmin,
                  username:user.username,
                  email:user.email,
-                  id:user.id
+                  id:user.id,
+                  active: user.active
                  },process.env.SECRET, {
                 expiresIn: '24hr'
             });
 
             res.status(200).send({
                 success:true,
-                data:_.pick(user,['username','isAdmin']),
+                data:_.pick(user,['username','isAdmin', 'active']),
                 accessToken
 
             });
@@ -264,7 +265,7 @@ export default class UserController {
     static async socialAuthenticationHandler(req, res){
         try {
         const { user: { username, email , id, isAdmin } } = req;
-        const { profile:{ image } } = await ProfileService.getProfile(username);
+        const { image }  = await ProfileService.getProfile(username);
         const token = jwt.sign({ username,email,id },process.env.SECRET)
         res.status(200).send({
             success:true,
