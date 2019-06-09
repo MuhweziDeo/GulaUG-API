@@ -266,7 +266,7 @@ export default class UserController {
         try {
         const { user: { username, email , id, isAdmin } } = req;
         const { image }  = await ProfileService.getProfile(username);
-        const token = jwt.sign({ username,email,id },process.env.SECRET)
+        const token = jwt.sign({ username,email,id, isAdmin },process.env.SECRET)
         res.status(200).send({
             success:true,
             username,
