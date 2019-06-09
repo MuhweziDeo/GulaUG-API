@@ -12,6 +12,7 @@ import errorHandler from './middleware/errorHandler';
 import morgan from 'morgan';
 const Sentry = require('@sentry/node');
 import adminRouter from "./routes/admin";
+import StartupHelper from './helpers/StartupHelper';
 
 Sentry.init({ dsn: 'https://f50b7454243c41169b92613e5f50d4b3@sentry.io/1473626' });
 
@@ -24,7 +25,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/auth', userRouter);
 app.use('/admin', adminRouter);
-
+StartupHelper.createSuperAdmin();
 app.on('user_created', (data) => { profileCreateHandler(data.username) } );
 sequelize.authenticate().then(console.log(
     'connected to DB'

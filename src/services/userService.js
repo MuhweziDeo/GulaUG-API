@@ -92,6 +92,7 @@ class UserService {
   static async verifyUser(email){
         try {
             const verified = await User.update({ email_verified: true,
+                active: true,
                     verified_on: new Date() },
                 { returning: true, where: { email } });
 
