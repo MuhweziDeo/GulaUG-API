@@ -13,7 +13,9 @@ dotenv.config()
 
 let sequelize;
 
-sequelize = new Sequelize(process.env.DATABASE_URL);
+sequelize = new Sequelize(process.env.DATABASE_URL,{
+  logging: false
+});
 
 fs
   .readdirSync(__dirname)

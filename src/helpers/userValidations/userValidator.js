@@ -7,7 +7,24 @@ const userCreateValidator = (data) => {
         password:Joi.string().required()
     }
 
+    return Joi.validate(data,schema,);
+}
+
+const adminCreateValidator = (data) => {
+    const schema = {
+        email:Joi.string().required().email(),
+    }
+
     return Joi.validate(data,schema)
+}
+
+const adminConfrimationValidator = (data) => {
+    const schema = {
+        username: Joi.string().trim().required(),
+        password: Joi.string().trim().required(),
+        confirmPassword: Joi.string().required()
+    }
+    return Joi.validate(data,schema, {abortEarly:false});
 }
 
 const userLoginValidator = data => {
@@ -63,5 +80,7 @@ module.exports = {
     passwordResetConfirmValidator,
     updateProfileValidator,
     googleFacebookValidator,
-    twitterTokenValidator
+    twitterTokenValidator,
+    adminCreateValidator,
+    adminConfrimationValidator
 }
