@@ -1,6 +1,7 @@
 import uuidv1 from 'uuid';
 import bcrypt from 'bcrypt';
 import { Profile, User } from '../database/models';
+import ProfileService from '../services/profileService';
 
 class AdminService {
 
@@ -42,6 +43,44 @@ class AdminService {
             return e;
         }
 
+    }
+
+    static async createAdminUser(email) {
+        try {
+            const username = uuidv1();
+            const user = await User.create({
+                email,
+                username,
+                password: await bcrypt.hash(uuidv1(),10)
+            });
+            await ProfileService.createUserProfile(username);
+            return user;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    static async verifyAdminUser(email, data) {
+        try {
+            const { password, username } = data;
+            const admin = await User.update({
+                password: await bcrypt.hash(password, 10),
+                username,
+                active:true,
+                isAdmin: true,
+                email_verified:true,
+                verified_on: new Date()},{
+                    where: {email},
+                    returning: true,
+                    attributes:['id', 'username','isAdmin','createdAt', 'updatedAt',
+                    'email', 'active', 'email_verified']
+                });
+            return admin;
+
+        } catch (error) {
+            console.log(error)
+            return error;
+        }
     }
 }
 

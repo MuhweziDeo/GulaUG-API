@@ -7,8 +7,9 @@ const saltRounds = 10;
 class UserService {
     static async findUserByEmail(email) {
         try {
-
-        const user = await User.findOne({ where : { email } });
+        const user = await User.findOne({ 
+            where : { email }
+        });
         return user;
 
         } catch (error) {
