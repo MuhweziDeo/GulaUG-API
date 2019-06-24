@@ -1,6 +1,6 @@
 const GooglePlusTokenStrategy = require('passport-google-plus-token');
 const passport = require('passport');
-import  UserService from '../../services/UserService';
+import  UserService from '../../services/userService';
 const uuidv1 = require('uuid/v1');
 const _ = require('lodash');
 

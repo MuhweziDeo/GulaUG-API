@@ -1,8 +1,8 @@
 require('dotenv').config();
 import _ from 'lodash';
 import jwt from 'jsonwebtoken';
-import UserService from '../../services/UserService';
-import ProfileService from '../../services/ProfileService';
+import UserService from '../../services/userService';
+import ProfileService from '../../services/profileService';
 import sendMail from '../../helpers/emailHelper';
 import app from '../../app';
 import ErrorHandler from '../../helpers/sendErrorHelper';
