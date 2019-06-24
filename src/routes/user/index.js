@@ -8,7 +8,6 @@ import googleFacebookTokenValidator from '../../middleware/validationMiddleware/
 import twitterTokenValidator from '../../middleware/validationMiddleware/user/twitterTokenValidator';
 import AuthMiddleware from '../../middleware/AuthMiddleware';
 import profileUpdateValidator from '../../middleware/validationMiddleware/user/profileUpdateValidator';
-import { multerUploads } from '../../middleware/multer';
 import googlePassport from '../../helpers/auth/google';
 import facebookPassport from '../../helpers/auth/facebook';
 import twitterPassport from '../../helpers/auth/twitter';
@@ -31,7 +30,7 @@ router.get('/profile/:username', UserController.getProfile);
 
 router.get('/profiles', UserController.getProfiles);
 
-router.put('/profile/:username',AuthMiddleware.validateToken, multerUploads, profileUpdateValidator, UserController.updateProfile)
+router.put('/profile/:username',AuthMiddleware.validateToken, profileUpdateValidator, UserController.updateProfile)
 
 router.post('/google',googleFacebookTokenValidator,googlePassport.authenticate('google-token',{session: false }),UserController.socialAuthenticationHandler);
 

@@ -5,8 +5,6 @@ import UserService from '../../services/userService';
 import ProfileService from '../../services/profileService';
 import sendMail from '../../helpers/emailHelper';
 import app from '../../app';
-import { dataUri } from '../../middleware/multer';
-import { uploader } from '../../config/cloudinaryConfig';
 import ErrorHandler from '../../helpers/sendErrorHelper';
 
 export default class UserController {
@@ -227,18 +225,6 @@ export default class UserController {
         try {
             const { params: { username }, body } = req;
             const updateBody = body;
-            if(req.file){
-                const file = dataUri(req).content
-                const result = await uploader.upload(file)
-                const updatedProfile = await ProfileService.updateProfile(
-                username,{ ...updateBody,image:result.url });
-
-                res.status(200).send({
-                    success:true,
-                    message:'Profile updated successfully',
-                    data:updatedProfile
-                });
-            }
             const updatedProfile = await ProfileService.updateProfile(username,updateBody);
             res.status(200).send({
                 success:true,
