@@ -1,5 +1,5 @@
 import { adminCreateValidator, adminConfrimationValidator} from '../../../helpers/userValidations/userValidator';
-import UserService from '../../../services/userService';
+import UserService from '../../../services/UserService';
 
 class AdminValidator {
 

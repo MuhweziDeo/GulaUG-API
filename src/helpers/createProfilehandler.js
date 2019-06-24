@@ -1,4 +1,4 @@
-const profileService = require('../services/profileService');
+const profileService = require('../services/ProfileService');
 
 module.exports = function(username) {
     
