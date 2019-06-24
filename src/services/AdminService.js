@@ -1,7 +1,7 @@
 import uuidv1 from 'uuid';
 import bcrypt from 'bcrypt';
 import { Profile, User } from '../database/models';
-import ProfileService from '../services/profileService';
+import ProfileService from './ProfileService';
 
 class AdminService {
 

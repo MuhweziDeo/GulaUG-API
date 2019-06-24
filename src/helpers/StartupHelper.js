@@ -1,4 +1,4 @@
-import UserService from '../services/userService';
+import UserService from '../services/UserService';
 import AdminService from '../services/AdminService';
 import createProfileHandler from './createProfilehandler';
 require('dotenv').config;

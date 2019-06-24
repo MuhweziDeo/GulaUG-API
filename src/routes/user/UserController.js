@@ -1,13 +1,13 @@
 require('dotenv').config();
 import _ from 'lodash';
 import jwt from 'jsonwebtoken';
-import UserService from '../../services/userService';
-import ProfileService from '../../services/profileService';
+import UserService from '../../services/UserService';
+import ProfileService from '../../services/ProfileService';
 import sendMail from '../../helpers/emailHelper';
 import app from '../../app';
 import ErrorHandler from '../../helpers/sendErrorHelper';
 
-export default class UserController {
+class UserController {
     static async signUpUser(req, res) {
         try {
             const { body } = req;
@@ -284,3 +284,5 @@ export default class UserController {
         }
     }
 }
+
+export default UserController;
