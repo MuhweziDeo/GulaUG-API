@@ -55,6 +55,7 @@ const updateProfileValidator = data => {
         lastName:Joi.string(),
         country:Joi.string(),
         city:Joi.string(),
+        image: Joi.string()
 
     }
     return Joi.validate(data,schema)
