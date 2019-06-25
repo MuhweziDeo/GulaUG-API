@@ -7,6 +7,8 @@ import twitterPassport from '../../helpers/auth/twitter';
 import SocialValidator from '../../middleware/validationMiddleware/user/SocialValidator';
 import UserValidator from '../../middleware/validationMiddleware/user/UserValidator';
 import ProfileValidator from '../../middleware/validationMiddleware/user/ProfileValidator';
+import { multerUploads } from '../../helpers/multer';
+
 
 const router = express.Router()
 
@@ -26,7 +28,7 @@ router.get('/profile/:username', UserController.getProfile);
 
 router.get('/profiles', UserController.getProfiles);
 
-router.put('/profile/:username', AuthMiddleware.validateToken, ProfileValidator.profileUpdateValidator, UserController.updateProfile)
+router.put('/profile/:username', AuthMiddleware.validateToken, ProfileValidator.profileUpdateValidator, multerUploads, UserController.updateProfile)
 
 router.post('/google', SocialValidator.facebookGoogleTokenValidator,googlePassport.authenticate('google-token',{session: false }),UserController.socialAuthenticationHandler);
 
