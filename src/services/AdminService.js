@@ -47,7 +47,7 @@ class AdminService {
 
     static async createAdminUser(email) {
         try {
-            const username = `AdminUser-${uuidv1().split('-')[0]}`;
+            const username = uuidv1();
             const user = await User.create({
                 email,
                 username,
@@ -78,6 +78,7 @@ class AdminService {
             return admin;
 
         } catch (error) {
+            console.log(error)
             return error;
         }
     }

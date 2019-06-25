@@ -82,7 +82,7 @@ class UserService {
 
     static async registerSocialUser(userData,ProfileData) {
         const newUser = await User.create( { ...userData, email_verified: true,
-            verified_on: new Date(), password: uuidv1(), active: true } );
+            verified_on: new Date(), password: uuidv1() } );
         await Profile.create( {
             username: newUser.username,
             ...ProfileData } );
