@@ -13,16 +13,15 @@ clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     const user = await UserService.findUserByEmail(emails[0].value);
     if(!user){
     const newUser = await UserService.registerSocialUser({
-            username:familyName + givenName + uuidv1(),
+            username:familyName + givenName + uuidv1().split('-')[0],
             email:emails[0].value,
-        },{firstName: familyName, lastName:givenName, image:url,})
+        },{firstName: familyName, lastName:givenName, image:url })
         
-        return done(null, _.pick(newUser,['id','username','email','isAdmin']));
+        return done(null, _.pick(newUser,['id','username','email','isAdmin', 'active']));
     }
-    return done(null,_.pick(user,['id','username','email','isAdmin']));
+    return done(null,_.pick(user,['id','username','email','isAdmin', 'active']));
     } catch (error) {
-        console.log(error);
-       throw new Error(error)
+       return error;
     }
    
 }));

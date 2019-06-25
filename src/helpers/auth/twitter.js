@@ -20,14 +20,14 @@ passport.use('twitter-token',new TwitterTokenStrategy({
     if(!user){
         const newUser = await UserService.registerSocialUser({
             email: emails[0].value ? emails[0].value :`${screen_name}@twitter.com`,
-            username: username+uuidv1()
+            username: username+uuidv1().split('-')[0]
         },{image: profile_image_url, lastName: givenName, firstName: familyName})
         return done(null,newUser);
     }
     return done(null,user);
 
     } catch (error) {
-        console.log(error);
+        return error;
     }
    
   }
