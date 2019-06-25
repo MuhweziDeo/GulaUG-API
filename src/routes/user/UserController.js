@@ -6,6 +6,9 @@ import ProfileService from '../../services/ProfileService';
 import sendMail from '../../helpers/emailHelper';
 import app from '../../app';
 import ErrorHandler from '../../helpers/sendErrorHelper';
+import { dataUri } from '../../helpers/multer';
+import { uploader } from '../../helpers/cloudinary';
+import { updateProfileValidator } from '../../helpers/userValidations/userValidator';
 
 class UserController {
     static async signUpUser(req, res) {
@@ -223,9 +226,23 @@ class UserController {
     }
     static async updateProfile(req,res){
         try {
-            const { params: { username }, body } = req;
-            const updateBody = body;
-            const updatedProfile = await ProfileService.updateProfile(username,updateBody);
+            const { error } = updateProfileValidator(req.body);
+            if (error) return res.status(400).send({
+                success: false,
+                message: error.details[0].message
+            });
+
+            let updateObject = {};
+            if(req.file) {
+                const file = dataUri(req).content;
+                const result = await uploader.upload(file)
+                updateObject.image = result.url;
+            }
+            updateObject = {...updateObject, ...req.body};
+
+            const { params: { username } } = req;
+
+            const updatedProfile = await ProfileService.updateProfile(username,updateObject);
             res.status(200).send({
                 success:true,
                 message:'Profile updated successfully',
