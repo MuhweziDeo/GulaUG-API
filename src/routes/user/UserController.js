@@ -267,13 +267,7 @@ class UserController {
     }
     static async socialAuthenticationHandler(req, res){
         try {
-        const { user: { username, email , id, isAdmin, active } } = req;
-        if (!active) {
-            res.status(401).send({
-                'message': 'Account deactivated Please contact admin',
-                'success': false
-            });
-        }
+        const { user: { username, email , id, isAdmin } } = req;
         const { image }  = await ProfileService.getProfile(username);
         const token = jwt.sign({ username,email,id, isAdmin },process.env.SECRET)
         res.status(200).send({
@@ -287,8 +281,8 @@ class UserController {
 
         } catch (error) {
           res.status(500).send({
-              message: 'unable to complete this request',
-              error: error.message
+              message:'unable to complete this request',
+              error:error.message
           })
         }
     }
