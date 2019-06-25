@@ -12,19 +12,19 @@ passport.use('facebook-token',new FacebookTokenStrategy({
         const {displayName,_json:{ first_name, last_name, middle_name, email }, photos} = profile;
         const userEmail =  email ? email : `${displayName.split(" ").join("")}@facebook.com`
         const user = await UserService.findUserByEmail(userEmail);
-
         if(!user){
             const newUser = await UserService.registerSocialUser({
-                  username: first_name ? first_name+uuidv1() : middle_name+uuidv1() || last_name+uuidv1() ,
+                  username: first_name ? `${first_name}-${uuidv1().split('-')[0]}` : `${middle_name}-${uuidv1().split('-')[0]}`
+                     || `${last_name}-${uuidv1().split('-')[0]}` ,
                    email: userEmail },
                   { firstName: first_name, lastName:last_name, image: photos[0].value } );
 
-            return done(null, _.pick(newUser,['id','username','email','isAdmin']));
+            return done(null, _.pick(newUser,['id','username','email','isAdmin', 'active']));
           }
-          return done(null,_.pick(user,['id','username','email','isAdmin']));
+          return done(null,_.pick(user,['id','username','email','isAdmin', 'active']));
 
       } catch (error) {
-          throw new Error(error)
+          return error;
       }
   }
 ));
