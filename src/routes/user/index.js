@@ -10,7 +10,7 @@ import ProfileValidator from '../../middleware/validationMiddleware/user/Profile
 import { multerUploads } from '../../helpers/multer';
 
 
-const router = express.Router()
+const router = express.Router();
 
 router.post('/signup', UserValidator.createUserValidator, UserController.signUpUser);
 
