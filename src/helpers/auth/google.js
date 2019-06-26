@@ -1,8 +1,7 @@
+const _ = require('lodash');
 const GooglePlusTokenStrategy = require('passport-google-plus-token');
 const passport = require('passport');
-import  UserService from '../../services/UserService';
-const uuidv1 = require('uuid/v1');
-const _ = require('lodash');
+import UserHelper from '../UserHelper';
 
 passport.use('google-token', new GooglePlusTokenStrategy({
 clientID: process.env.GOOGLE_CLIENT_ID,
@@ -10,16 +9,10 @@ clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 }, async (accessToken, refreshToken, profile, done) => {
     try {
     const {_json:{ image: { url }, name:{ familyName, givenName }, emails } } = profile;
-    const user = await UserService.findUserByEmail(emails[0].value);
-    if(!user){
-    const newUser = await UserService.registerSocialUser({
-            username:familyName + givenName + uuidv1().split('-')[0],
-            email:emails[0].value,
-        },{firstName: familyName, lastName:givenName, image:url })
-        
-        return done(null, _.pick(newUser,['id','username','email','isAdmin', 'active']));
-    }
+    const user = await UserHelper.createSocialUser(emails[0].value, familyName, givenName, url);
+    await UserHelper.updateProfileImage(user.username, url);
     return done(null,_.pick(user,['id','username','email','isAdmin', 'active']));
+
     } catch (error) {
        return error;
     }
