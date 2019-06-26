@@ -1,6 +1,7 @@
 const FacebookTokenStrategy = require('passport-facebook-token');
 const passport = require('passport');
 import  UserService  from  '../../services/UserService';
+import UserHelper from '../UserHelper';
 const uuidv1 = require('uuid/v1');
 const _ = require('lodash');
 
@@ -11,17 +12,9 @@ passport.use('facebook-token',new FacebookTokenStrategy({
       try {
         const {displayName,_json:{ first_name, last_name, middle_name, email }, photos} = profile;
         const userEmail =  email ? email : `${displayName.split(" ").join("")}@facebook.com`
-        const user = await UserService.findUserByEmail(userEmail);
-        if(!user){
-            const newUser = await UserService.registerSocialUser({
-                  username: first_name ? `${first_name}-${uuidv1().split('-')[0]}` : `${middle_name}-${uuidv1().split('-')[0]}`
-                     || `${last_name}-${uuidv1().split('-')[0]}` ,
-                   email: userEmail },
-                  { firstName: first_name, lastName:last_name, image: photos[0].value } );
-
-            return done(null, _.pick(newUser,['id','username','email','isAdmin', 'active']));
-          }
-          return done(null,_.pick(user,['id','username','email','isAdmin', 'active']));
+        const user = await UserHelper.createSocialUser(userEmail, first_name, middle_name || last_name, photos[0].value);
+        await UserHelper.updateProfileImage(user.username, photos[0].value);
+        return done(null,_.pick(user,['id','username','email','isAdmin', 'active']));
 
       } catch (error) {
           return error;
