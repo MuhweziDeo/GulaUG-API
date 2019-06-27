@@ -13,6 +13,7 @@ import adminRouter from "./routes/admin";
 import StartupHelper from './helpers/StartupHelper';
 import { multerUploads, dataUri } from './helpers/multer';
 import {cloudinaryConfig, uploader} from './helpers/cloudinary';
+import tokenRouter from './routes/token';
 
 const apiPrefix = '/api/v1';
 Sentry.init({ dsn: 'https://f50b7454243c41169b92613e5f50d4b3@sentry.io/1473626' });
@@ -24,6 +25,7 @@ app.use('*', cloudinaryConfig);
 app.use(express.json());
 app.use(apiPrefix, userRouter);
 app.use(`${apiPrefix}/admin`, adminRouter);
+app.use(`${apiPrefix}/token`, tokenRouter);
 StartupHelper.createSuperAdmin();
 app.on('user_created', (data) => { profileCreateHandler(data.username) } );
 app.use(express.static(resolve(__dirname, 'src/public')));

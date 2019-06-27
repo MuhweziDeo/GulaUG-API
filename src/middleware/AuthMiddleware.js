@@ -24,9 +24,8 @@ class AuthMiddleware {
        });
 
         try {
-
             req.user = await jwt.verify(authorization,process.env.SECRET);
-           return  next();
+            return  next();
         } catch (error) {
             res.status(500).send({
                 error,
