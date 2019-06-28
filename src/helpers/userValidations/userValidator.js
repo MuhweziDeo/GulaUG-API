@@ -74,6 +74,15 @@ const twitterTokenValidator = data => {
     }
     return Joi.validate(data,schema)
 }
+
+const passwordChangeSchema = data => {
+    const schema = {
+        newPassword: Joi.string().trim().required().min(5),
+        passwordConfirmation: Joi.string().trim().required().min(5),
+        oldPassword: Joi.string().trim().required().min(5)
+    }
+    return Joi.validate(data, schema);
+}
 module.exports = {
     userCreateValidator,
     userLoginValidator,
@@ -83,5 +92,6 @@ module.exports = {
     googleFacebookValidator,
     twitterTokenValidator,
     adminCreateValidator,
-    adminConfrimationValidator
+    adminConfrimationValidator,
+    passwordChangeSchema
 }

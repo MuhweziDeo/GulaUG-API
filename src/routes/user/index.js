@@ -22,6 +22,8 @@ router.get('/user', AuthMiddleware.validateToken, UserController.getLoggedInUser
 
 router.post('/password-reset', UserValidator.validatePasswordResetRequest, UserController.requestPasswordReset);
 
+router.put('/password-change', AuthMiddleware.validateToken, UserValidator.validateChangePassword, UserController.changePassword);
+
 router.put('/password-reset/:token/confirm', UserValidator.validatePasswordResetConfirmation, UserController.passwordResetConfirm);
 
 router.get('/profile/:username', UserController.getProfile);

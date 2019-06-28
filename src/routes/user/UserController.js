@@ -9,6 +9,8 @@ import ErrorHandler from '../../helpers/sendErrorHelper';
 import { dataUri } from '../../helpers/multer';
 import { uploader } from '../../helpers/cloudinary';
 import { updateProfileValidator } from '../../helpers/userValidations/userValidator';
+import PasswordHelper from '../../helpers/PasswordHelper';
+import SendErrorHelpler from '../../helpers/sendErrorHelper';
 
 class UserController {
     static async signUpUser(req, res) {
@@ -305,6 +307,50 @@ class UserController {
                 message:'Something Went wrong'
             })
         }
+    }
+
+    static async changePassword(req, res) {
+        try {
+            const { user:{ email }, body: { oldPassword, newPassword, passwordConfirmation } }= req;
+            if (newPassword !== passwordConfirmation ) {
+                return res.status(400).send({
+                    message: 'Passwords must match',
+                    success: false
+                });
+            }
+            const user = await UserService.findUserByEmail(email);
+            if (!user) {
+                return res.status(404).send({
+                    message: 'User not found',
+                    success: false
+                })
+            }
+            const verifyOldPassword = await PasswordHelper.comparePassword(user.password, oldPassword)
+    
+            if (!verifyOldPassword) {
+                return res.status(400).send({
+                    message: 'Old password doesnot match',
+                    success: false,
+                    action: 'Please verify the old password and try again'
+                })
+            }
+            const response  = await UserService.updatePassword(user.email, newPassword);
+            return res.status(200).send({
+                message: 'password succesfully updated',
+                success: true,
+                data:{
+                    email: response.email,
+                    username: response.username,
+                    isAdmin: response.isAdmin
+                }
+            });
+            
+        } catch (error) {
+            SendErrorHelpler.sendError(res, error);
+            
+        }
+       
+        
     }
 }
 
