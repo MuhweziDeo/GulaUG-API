@@ -4,7 +4,8 @@ import {
 passwordResetRequestValidator,
 passwordResetConfirmValidator,
 userCreateValidator,
-userLoginValidator
+userLoginValidator,
+passwordChangeSchema
 } from '../../../helpers/userValidations/userValidator';
 import _ from 'lodash';
 
@@ -69,6 +70,11 @@ class UserValidator {
 
     static async validatePasswordResetConfirmation(req, res, next) {
         const response = await JoiValidatorHelper.validateRequest(req, res, next, passwordResetConfirmValidator);
+        return response;
+    }
+
+    static async validateChangePassword(req,res, next) {
+        const response = await JoiValidatorHelper.validateRequest(req, res, next, passwordChangeSchema);
         return response;
     }
 }
