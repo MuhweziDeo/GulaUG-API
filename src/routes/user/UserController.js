@@ -6,8 +6,6 @@ import ProfileService from '../../services/ProfileService';
 import sendMail from '../../helpers/emailHelper';
 import app from '../../app';
 import ErrorHandler from '../../helpers/sendErrorHelper';
-import { dataUri } from '../../helpers/multer';
-import { uploader } from '../../helpers/cloudinary';
 import { updateProfileValidator } from '../../helpers/userValidations/userValidator';
 import PasswordHelper from '../../helpers/PasswordHelper';
 import SendErrorHelpler from '../../helpers/sendErrorHelper';
@@ -114,7 +112,7 @@ class UserController {
                 action_url:null
             });
 
-            const accessToken = jwt.sign( {
+            const accessToken = await jwt.sign( {
                 isAdmin:user.isAdmin,
                  username:user.username,
                  email:user.email,
@@ -123,10 +121,9 @@ class UserController {
                  },process.env.SECRET, {
                 expiresIn: '24hr'
             });
-
             res.status(200).send({
                 success:true,
-                data:_.pick(user,['username','isAdmin', 'active']),
+                data:_.pick(user,['username','isAdmin', 'active', 'lastLogin']),
                 accessToken
 
             });

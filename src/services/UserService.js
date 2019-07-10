@@ -7,7 +7,7 @@ const saltRounds = 10;
 class UserService {
     static async findUserByEmail(email) {
         try {
-        const user = await User.findOne({ 
+        const user = await User.findOne({
             where : { email }
         });
         return user;
@@ -55,6 +55,12 @@ class UserService {
 
         const verifyPassword = await bcrypt.compare(password,user.password);
 
+        if(verifyPassword) {
+            await user.update({
+                lastLogin: new Date()
+            })
+        }
+
         return verifyPassword;
 
         } catch (error) {
@@ -90,11 +96,10 @@ class UserService {
     return newUser;
     }
 
-  static async verifyUser(email){
+  static async verifyUser(email) {
         try {
             const verified = await User.update({ email_verified: true,
-                active: true,
-                    verified_on: new Date() },
+                active: true, verified_on: new Date() },
                 { returning: true, where: { email } });
 
             return verified[1][0].dataValues;
@@ -102,6 +107,7 @@ class UserService {
             return e;
         }
   }
+
 
 }
 export default UserService;
