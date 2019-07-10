@@ -30,7 +30,7 @@ router.get('/profile/:username', UserController.getProfile);
 
 router.get('/profiles', UserController.getProfiles);
 
-router.put('/profile/:username', AuthMiddleware.validateToken, ProfileValidator.profileUpdateValidator, multerUploads, UserController.updateProfile)
+router.put('/profile/:username', AuthMiddleware.validateToken, ProfileValidator.profileUpdateValidator, UserController.updateProfile)
 
 router.post('/google', SocialValidator.facebookGoogleTokenValidator,googlePassport.authenticate('google-token',{session: false }),UserController.socialAuthenticationHandler);
 
