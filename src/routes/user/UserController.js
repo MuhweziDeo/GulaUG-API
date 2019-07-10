@@ -234,17 +234,9 @@ class UserController {
                 message: error.details[0].message
             });
 
-            let updateObject = {};
-            if(req.file) {
-                const file = dataUri(req).content;
-                const result = await uploader.upload(file)
-                updateObject.image = result.url;
-            }
-            updateObject = {...updateObject, ...req.body};
+            const { params: { username }, body } = req;
 
-            const { params: { username } } = req;
-
-            const updatedProfile = await ProfileService.updateProfile(username,updateObject);
+            const updatedProfile = await ProfileService.updateProfile(username,body);
             res.status(200).send({
                 success:true,
                 message:'Profile updated successfully',
@@ -326,7 +318,7 @@ class UserController {
                 })
             }
             const verifyOldPassword = await PasswordHelper.comparePassword(user.password, oldPassword)
-    
+
             if (!verifyOldPassword) {
                 return res.status(400).send({
                     message: 'Old password doesnot match',
@@ -344,13 +336,13 @@ class UserController {
                     isAdmin: response.isAdmin
                 }
             });
-            
+
         } catch (error) {
             SendErrorHelpler.sendError(res, error);
-            
+
         }
-       
-        
+
+
     }
 }
 
