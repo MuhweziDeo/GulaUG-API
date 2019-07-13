@@ -1,6 +1,6 @@
 require('dotenv').config();
 import AdminService from "../../services/AdminService";
-import  SendErrorHelpler from '../../helpers/sendErrorHelper';
+import  SendErrorHelper from '../../helpers/sendErrorHelper';
 import _ from 'lodash';
 import SendMailHelper from "../../helpers/EmailHelperClass";
 import JwtHelper from '../../helpers/JwtHelper';
@@ -18,7 +18,7 @@ class AdminController {
             });
 
         }catch (e) {
-            SendErrorHelpler.sendError(res, e);
+            await SendErrorHelper.sendError(res, e);
         }
     };
 
@@ -42,7 +42,7 @@ class AdminController {
                 message
             });
         }catch (e) {
-            SendErrorHelpler.sendError(res, e);
+            await SendErrorHelper.sendError(res, e);
         }
 
     }
@@ -66,15 +66,15 @@ class AdminController {
                 success: true,
                 message: 'Admin created successfully awaiting confirmation'
             });
-            
+
         } catch (error) {
-            SendErrorHelpler.sendError(res,error);
+            await SendErrorHelper.sendError(res,error);
         }
     }
 
     static async verifyAdminUser(req, res) {
         try {
-            const { body: { password, username, 
+            const { body: { password, username,
                 confirmPassword }, params: { token } } = req;
 
             if (password !== confirmPassword) {
@@ -90,7 +90,7 @@ class AdminController {
                 success: false,
                 message: 'User with email doesnot exist'
             });
-            const payload = _.pick(newAdmin[1][0],['username', 'email', 
+            const payload = _.pick(newAdmin[1][0],['username', 'email',
             'createdAt','updatedAt', 'isAdmin','id']);
             const access_token = await JwtHelper.generateToken({ payload });
 
@@ -102,7 +102,7 @@ class AdminController {
                 username:newAdmin[1][0].username,
             })
         } catch (error) {
-            SendErrorHelpler.sendError(res, error);
+            await SendErrorHelper.sendError(res, error);
         }
     }
 }

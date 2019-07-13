@@ -1,5 +1,5 @@
 import JwtHelper from '../../helpers/JwtHelper';
-import SendErrorHelpler from '../../helpers/sendErrorHelper';
+import SendErrorHelper from '../../helpers/sendErrorHelper';
 
 export default class TokenController {
 
@@ -10,12 +10,12 @@ export default class TokenController {
             return res.status(200).send({
                 success: true,
                 message: 'Token successfully blacklisted'
-                
+
             });
         } catch (error) {
-            SendErrorHelpler.sendError(res, error);
+           await SendErrorHelper.sendError(res, error);
         }
-        
+
     }
 
     static async tokenRefresh(req, res) {
@@ -34,8 +34,9 @@ export default class TokenController {
                 token: access_token
             });
         } catch (error) {
-            SendErrorHelpler.sendError(res, error);
+            await SendErrorHelper.sendError(res, error);
+
         }
-       
+
     }
 }

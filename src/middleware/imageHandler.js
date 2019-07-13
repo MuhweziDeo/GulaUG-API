@@ -19,13 +19,13 @@ class ImageHandler {
                     error,
                     'message': 'Image upload was unsuccessful'
                 }
-                next();
+                return next();
             }
-            res.status({
+            return res.status(500).send({
                 error,
                 'message': 'Something went wrong'
-            });   
-        } 
+            });
+        }
     }
 }
 

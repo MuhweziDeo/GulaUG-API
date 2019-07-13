@@ -9,7 +9,7 @@ adminRouter.use(
     '/users',
     AuthMiddleware.validateToken,
     AuthMiddleware.validateAdmin
-)
+);
 
 adminRouter.get(
     '/users',
@@ -19,18 +19,18 @@ adminRouter.get(
 adminRouter.put(
     '/user/activation',
     AdminController.activateDeactivateUser
-)
+);
 
 adminRouter.post(
     '/add',
-    AdminValidator.validateRequestBody, 
+    AdminValidator.validateRequestBody,
     AdminController.addAdminUser
-)
+);
 adminRouter.put(
     '/verify/:token/confirm',
     AdminValidator.validateAdminConfirmation,
     AdminController.verifyAdminUser
-    
-)
+
+);
 
 export default  adminRouter;

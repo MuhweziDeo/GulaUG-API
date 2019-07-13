@@ -8,7 +8,7 @@ import app from '../../app';
 import ErrorHandler from '../../helpers/sendErrorHelper';
 import { updateProfileValidator } from '../../helpers/userValidations/userValidator';
 import PasswordHelper from '../../helpers/PasswordHelper';
-import SendErrorHelpler from '../../helpers/sendErrorHelper';
+import SendErrorHelper from '../../helpers/sendErrorHelper';
 
 class UserController {
     static async signUpUser(req, res) {
@@ -167,7 +167,7 @@ class UserController {
 
 
   } catch (error){
-      ErrorHandler.sendError(res, error);
+      await ErrorHandler.sendError(res, error);
     }
   }
 
@@ -209,7 +209,7 @@ class UserController {
             if(fetchProfile.message) return res.status(404).send({
                 message:fetchProfile.message,
                 success:false
-            })
+            });
 
             res.status(200).send({
                 success:true,
@@ -318,14 +318,14 @@ class UserController {
 
             if (!verifyOldPassword) {
                 return res.status(400).send({
-                    message: 'Old password doesnot match',
+                    message: 'Old password doesnt match',
                     success: false,
                     action: 'Please verify the old password and try again'
                 })
             }
             const response  = await UserService.updatePassword(user.email, newPassword);
             return res.status(200).send({
-                message: 'password succesfully updated',
+                message: 'password successfully updated',
                 success: true,
                 data:{
                     email: response.email,
@@ -335,7 +335,7 @@ class UserController {
             });
 
         } catch (error) {
-            SendErrorHelpler.sendError(res, error);
+            await SendErrorHelper.sendError(res, error);
 
         }
 

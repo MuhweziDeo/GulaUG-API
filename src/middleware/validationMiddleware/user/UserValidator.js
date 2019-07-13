@@ -1,6 +1,6 @@
 import UserService from '../../../services/UserService';
 import JoiValidatorHelper from '../../../helpers/JoiValidatorHelper';
-import { 
+import {
 passwordResetRequestValidator,
 passwordResetConfirmValidator,
 userCreateValidator,
@@ -10,14 +10,6 @@ passwordChangeSchema
 import _ from 'lodash';
 
 class UserValidator {
-
-    static async validateUserExistence(req, res , next) {
-
-        const { body: { email } } = req;
-        const user = await UserService.findUserByEmail(email);
-        req.user = user;
-        return next;
-    }
 
     static async createUserValidator(req,res,next) {
         const response = await JoiValidatorHelper.validateRequest(req, res, next, userCreateValidator);
@@ -34,17 +26,17 @@ class UserValidator {
                  message: 'username already taken'
              });
          }
-     
+
          if (attemptedEmail) {
             return res.status(400).send({
                  success: false,
                  message: 'email already taken'
              });
          }
-       
+
     }
 
-    static async userLoginValidaor(req,res, next) {
+    static async userLoginValidator(req, res, next) {
         const response = await JoiValidatorHelper.validateRequest(req, res, next, userLoginValidator);
         return response;
     }
@@ -52,14 +44,14 @@ class UserValidator {
     static async validatePasswordResetRequest(req,res,next) {
         const { body : { email } } = req;
         const { error } = passwordResetRequestValidator(req.body);
-    
+
         if (error) return res.status(400).send({
             success: false,
             message: error.details[0].message
         });
-    
+
         const user = await UserService.findUserByEmail(email)
-    
+
         if(!user) return res.status(404).send({
             success:false,
             message:'A user with that email wasnot found'
