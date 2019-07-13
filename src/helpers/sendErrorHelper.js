@@ -1,7 +1,7 @@
-export  default class SendErrorHelpler {
+export default class SendErrorHelper {
 
   static async sendError (res, error){
-    res.status(500).send({
+    return res.status(500).send({
         success: false,
         message:'Unable to complete the request',
         info: 'Kindly contact support for assistance',

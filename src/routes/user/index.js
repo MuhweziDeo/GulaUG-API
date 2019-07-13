@@ -7,7 +7,6 @@ import twitterPassport from '../../helpers/auth/twitter';
 import SocialValidator from '../../middleware/validationMiddleware/user/SocialValidator';
 import UserValidator from '../../middleware/validationMiddleware/user/UserValidator';
 import ProfileValidator from '../../middleware/validationMiddleware/user/ProfileValidator';
-import { multerUploads } from '../../helpers/multer';
 
 
 const router = express.Router();
@@ -16,7 +15,7 @@ router.post('/signup', UserValidator.createUserValidator, UserController.signUpU
 
 router.put('/verify/:token/',UserController.verifyUser);
 
-router.post('/login', UserValidator.userLoginValidaor, UserController.loginUser);
+router.post('/login', UserValidator.userLoginValidator, UserController.loginUser);
 
 router.get('/user', AuthMiddleware.validateToken, UserController.getLoggedInUser);
 
