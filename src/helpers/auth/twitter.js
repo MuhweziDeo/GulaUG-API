@@ -9,8 +9,8 @@ passport.use('twitter-token',new TwitterTokenStrategy({
      
   }, async(token, tokenSecret, profile, done) => {
     try {
-    const {_json:{ screen_name, name, profile_image_url },username, emails, 
-            photos, name: { familyName, givenName }
+    const {_json:{ screen_name, name, profile_image_url },username, emails,
+        name: { familyName, givenName }
         } = profile;  
     
     const user = emails[0].value ? 

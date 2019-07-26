@@ -1,8 +1,9 @@
-module.exports = function(error, req, res, next){
+module.exports = (error, req, res, next) => {
     if(error) {
-        res.status(500).json({success: false,
+        const message = error.message;
+        return res.status(500).json({success: false,
          message: `Oops Something went wrong!! Please Contact Support`,
-          error })
+          error: message })
     }
     next();
-}
+};

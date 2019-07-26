@@ -36,7 +36,8 @@ class JwtHelper {
             }
             const { isAdmin, username, email } = payload;
             await JwtHelper.blackListToken(token);
-            const access_token = await JwtHelper.generateToken({isAdmin, username, email}, {expiresIn: '24hr'});
+            const access_token = await JwtHelper.generateToken({isAdmin, username, email},
+                {expiresIn: '24hr'});
             return access_token;
         } catch (error) {
             return error;

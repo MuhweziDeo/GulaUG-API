@@ -1,4 +1,4 @@
-import { adminCreateValidator, adminConfrimationValidator} from '../../../helpers/userValidations/userValidator';
+import { adminCreateValidator, adminConfrimationValidator} from '../../../helpers/userValidations/userSchemas';
 import UserService from '../../../services/UserService';
 
 class AdminValidator {

@@ -1,5 +1,5 @@
 import JoiValidator from  '../../../helpers/JoiValidatorHelper';
-import { googleFacebookValidator, twitterTokenValidator } from '../../../helpers/userValidations/userValidator';
+import { googleFacebookValidator, twitterTokenValidator } from '../../../helpers/userValidations/userSchemas';
 
 class SocialValidator {
 

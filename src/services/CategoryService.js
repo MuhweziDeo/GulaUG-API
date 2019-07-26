@@ -46,7 +46,7 @@ class CategoryService {
         }catch (e) {
            return e;
         }
-    }
+    };
 
     static async deleteCategory(id) {
         try {
@@ -81,6 +81,14 @@ class CategoryService {
         }
 
     }
+
+    static async findCategoryAndSubcategory(id, categoryId) {
+        const result = await SubCategory.findOne({
+            where: { id, categoryId }
+        });
+        return  result;
+    }
+
     static async updateSubCategory(subCategoryId, updateObject) {
         try {
 
@@ -91,6 +99,7 @@ class CategoryService {
             return results;
 
         }catch (e) {
+
             return e;
         }
     }
@@ -99,14 +108,13 @@ class CategoryService {
         try {
             const result = await SubCategory.destroy({ where: {id}});
             return result;
+
         } catch (e) {
+
             return e;
         }
 
     };
-
-
-
 
 }
 

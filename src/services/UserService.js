@@ -43,7 +43,7 @@ class UserService {
             return user;
 
         } catch (error) {
-         return error;
+            return error;
         }
     }
 
@@ -77,7 +77,7 @@ class UserService {
 
             const updateUser = await user.update({
                 password:hashPassword
-            })
+            });
 
             return updateUser;
 
@@ -93,10 +93,10 @@ class UserService {
             username: newUser.username,
             ...ProfileData } );
 
-    return newUser;
+        return newUser;
     }
 
-  static async verifyUser(email) {
+    static async verifyUser(email) {
         try {
             const verified = await User.update({ email_verified: true,
                 active: true, verified_on: new Date() },

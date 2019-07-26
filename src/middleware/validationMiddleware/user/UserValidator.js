@@ -6,7 +6,7 @@ passwordResetConfirmValidator,
 userCreateValidator,
 userLoginValidator,
 passwordChangeSchema
-} from '../../../helpers/userValidations/userValidator';
+} from '../../../helpers/userValidations/userSchemas';
 import _ from 'lodash';
 
 class UserValidator {
@@ -16,7 +16,7 @@ class UserValidator {
          if (response && response.statusCode === 400) {
             return response;
          }
-         const { body } = req
+         const { body } = req;
          const attemptedUsername = await UserService.findUserByUsername(body.username);
          const attemptedEmail = await UserService.findUserByEmail(body.email);
 
