@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Category.hasMany(models.SubCategory, {
       foreignKey: 'categoryId'
-    })
+    });
   };
   return Category;
 };

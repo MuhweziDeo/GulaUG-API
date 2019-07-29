@@ -15,9 +15,9 @@ class CategoryValidator {
            return  res.status(400).send({
                 success: false,
                 message: error.details[0].message
-            })
+            });
         }
-        next();
+        return next();
     }
 
     static async validateUpdateCategory(req, res, next) {
@@ -38,7 +38,7 @@ class CategoryValidator {
                 message: error.details[0].message
             })
         }
-        next();
+        return next();
     }
 
     static async validateCategoryExistence(req, res, next) {
@@ -50,9 +50,10 @@ class CategoryValidator {
                 success: false
             });
         }
-        next();
+        return next();
 
     }
+    
     static async validateSubCategoryExistence(req, res, next) {
         const { params: { subCategoryId } } = req;
         const result = await CategoryService.findSubCategoryById(subCategoryId);
@@ -62,7 +63,7 @@ class CategoryValidator {
                 success: false
             });
         }
-        next();
+        return next();
 
     }
 }

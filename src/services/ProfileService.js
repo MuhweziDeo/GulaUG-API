@@ -1,4 +1,4 @@
-const { Profile, User } = require('../database/models');
+const { Profile, User, Product } = require('../database/models');
 
 export default class ProfileService {
 
@@ -41,6 +41,7 @@ static async getProfiles () {
             attributes: {
                 exclude: ['password']
             },
+            include: [Product],
             where: {active: true}
         }]
     });

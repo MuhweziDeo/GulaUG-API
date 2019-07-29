@@ -1,7 +1,7 @@
 const profileService = require('../services/ProfileService');
 
-module.exports = function(username) {
+module.exports = (username) => {
     
 return profileService.createUserProfile(username);
 
-}
+};

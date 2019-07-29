@@ -9,7 +9,7 @@ class PasswordHelper {
 
     static async hashPassword(password, salts) {
         const hashedPassword = await bcrypt.hash(password, salts);
-        return hashPassword;
+        return hashedPassword;
     }
 }
 

@@ -15,6 +15,8 @@ import { multerUploads, dataUri } from './helpers/multer';
 import {cloudinaryConfig, uploader} from './helpers/cloudinary';
 import tokenRouter from './routes/token';
 import categoryRouter from './routes/category';
+import productRouter from './routes/product';
+import specificationsRouter from './routes/specifications';
 
 const apiPrefix = '/api/v1';
 Sentry.init({ dsn: 'https://f50b7454243c41169b92613e5f50d4b3@sentry.io/1473626' });
@@ -28,6 +30,8 @@ app.use(apiPrefix, userRouter);
 app.use(`${apiPrefix}/admin`, adminRouter);
 app.use(`${apiPrefix}/token`, tokenRouter);
 app.use(`${apiPrefix}`, categoryRouter);
+app.use(`${apiPrefix}/products`, productRouter);
+app.use(`${apiPrefix}/specifications`, specificationsRouter);
 StartupHelper.createSuperAdmin();
 app.on('user_created', (data) => { profileCreateHandler(data.username) } );
 app.use(express.static(resolve(__dirname, 'src/public')));
@@ -49,7 +53,7 @@ sequelize.authenticate().then(
     )
     .catch((err)=>{
     console.log(err)
-})
+});
 app.use('*',errorHandler);
 
 const port = process.env.PORT || 5000

@@ -6,7 +6,7 @@ import ProfileService from '../../services/ProfileService';
 import sendMail from '../../helpers/emailHelper';
 import app from '../../app';
 import ErrorHandler from '../../helpers/sendErrorHelper';
-import { updateProfileValidator } from '../../helpers/userValidations/userValidator';
+import { updateProfileValidator } from '../../helpers/userValidations/userSchemas';
 import PasswordHelper from '../../helpers/PasswordHelper';
 import SendErrorHelper from '../../helpers/sendErrorHelper';
 

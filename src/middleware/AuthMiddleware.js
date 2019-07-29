@@ -16,7 +16,7 @@ class AuthMiddleware {
     }
 
    static async validateToken(req, res, next) {
-        const { headers : { authorization } } = req;
+       const { headers : { authorization } } = req;
        if (!authorization) return res.status(401).send({
            success:false,
            message:'Missing Authorization header',
