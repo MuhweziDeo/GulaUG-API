@@ -37,7 +37,7 @@
     "passport-google-plus-token": "^2.1.0",
     "passport-twitter-token": "^1.3.0",
     "pg": "^7.9.0",
-    "sequelize": "^5.2.9",
+    "sequelize": "^5.15.1",
     "travis": "^0.1.1",
     "uuid": "^3.3.2"
   },
