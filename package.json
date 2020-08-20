@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@sentry/node": "^5.4.0",
-    "bcrypt": "^3.0.5",
+    "bcrypt": "^5.0.0",
     "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
     "coverage": "^0.0.0",
